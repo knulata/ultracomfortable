@@ -42,15 +42,41 @@ export function CompleteTheLook({ currentProduct, suggestedItems }: CompleteTheL
 
   const addAllToCart = () => {
     selectedProducts.forEach(item => {
-      addItem({
-        id: item.id,
-        name: language === 'id' ? item.nameId : item.name,
-        price: item.price,
-        image: '',
-        quantity: 1,
+      const mockVariant = {
+        id: `${item.id}-variant`,
+        product_id: item.id,
+        sku: item.slug,
         size: 'M',
         color: 'Default',
-      })
+        color_hex: '#000000',
+        price_adjustment: 0,
+        stock: 10,
+        images: [],
+        is_active: true,
+        created_at: new Date().toISOString(),
+      }
+
+      const mockProduct = {
+        id: item.id,
+        brand_id: 'uc',
+        category_id: item.category.toLowerCase(),
+        name: language === 'id' ? item.nameId : item.name,
+        slug: item.slug,
+        description: '',
+        base_price: item.price,
+        sale_price: null,
+        images: [],
+        tags: [],
+        is_active: true,
+        is_featured: false,
+        total_sold: 0,
+        rating_avg: 0,
+        rating_count: 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+
+      addItem(mockVariant, mockProduct, 1)
     })
     toast.success(
       language === 'id'

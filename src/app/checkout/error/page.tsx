@@ -1,12 +1,13 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { XCircle, RefreshCw, MessageCircle, ArrowLeft } from 'lucide-react'
+import { XCircle, RefreshCw, MessageCircle, ArrowLeft, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/stores/language'
 
-export default function CheckoutErrorPage() {
+function ErrorContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order_id')
   const errorCode = searchParams.get('error') || 'payment_failed'
@@ -115,5 +116,13 @@ export default function CheckoutErrorPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutErrorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>}>
+      <ErrorContent />
+    </Suspense>
   )
 }

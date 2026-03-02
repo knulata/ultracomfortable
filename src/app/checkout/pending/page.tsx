@@ -1,14 +1,15 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Clock, Copy, RefreshCw, ArrowRight } from 'lucide-react'
+import { Clock, Copy, RefreshCw, ArrowRight, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/stores/language'
 import { formatPrice } from '@/stores/cart'
 import { toast } from 'sonner'
 
-export default function CheckoutPendingPage() {
+function PendingContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order_id') || 'UC-000000'
   const { t, language } = useTranslation()
@@ -128,5 +129,13 @@ export default function CheckoutPendingPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutPendingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>}>
+      <PendingContent />
+    </Suspense>
   )
 }

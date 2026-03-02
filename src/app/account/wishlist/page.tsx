@@ -10,41 +10,96 @@ import { useTranslation } from '@/stores/language'
 import { toast } from 'sonner'
 
 export default function WishlistPage() {
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
   const { items, removeItem } = useWishlistStore()
-  const { addItem: addToCart } = useCartStore()
+  const { addItem: addToCart, openCart } = useCartStore()
 
   const handleRemove = (id: string) => {
     removeItem(id)
-    toast.success(t.account.wishlist === 'Favorit' ? 'Dihapus dari favorit' : 'Removed from wishlist')
+    toast.success(language === 'id' ? 'Dihapus dari favorit' : 'Removed from wishlist')
   }
 
   const handleAddToCart = (item: typeof items[0]) => {
-    addToCart({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      image: item.image,
-      quantity: 1,
+    // Create mock variant and product for cart
+    const mockVariant = {
+      id: `${item.id}-variant`,
+      product_id: item.id,
+      sku: item.slug,
       size: 'M',
       color: 'Default',
-    })
-    toast.success(t.productDetail.addToCart === 'Tambah ke Keranjang' ? 'Ditambahkan ke keranjang' : 'Added to cart')
+      color_hex: '#000000',
+      price_adjustment: 0,
+      stock: 10,
+      images: [item.image],
+      is_active: true,
+      created_at: new Date().toISOString(),
+    }
+
+    const mockProduct = {
+      id: item.id,
+      brand_id: 'uc',
+      category_id: 'general',
+      name: item.name,
+      slug: item.slug,
+      description: '',
+      base_price: item.originalPrice ?? item.price,
+      sale_price: item.originalPrice ? item.price : null,
+      images: [item.image],
+      tags: [],
+      is_active: true,
+      is_featured: false,
+      total_sold: 0,
+      rating_avg: 0,
+      rating_count: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+
+    addToCart(mockVariant, mockProduct, 1)
+    toast.success(language === 'id' ? 'Ditambahkan ke keranjang' : 'Added to cart')
+    openCart()
   }
 
   const handleAddAllToCart = () => {
     items.forEach(item => {
-      addToCart({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        image: item.image,
-        quantity: 1,
+      const mockVariant = {
+        id: `${item.id}-variant`,
+        product_id: item.id,
+        sku: item.slug,
         size: 'M',
         color: 'Default',
-      })
+        color_hex: '#000000',
+        price_adjustment: 0,
+        stock: 10,
+        images: [item.image],
+        is_active: true,
+        created_at: new Date().toISOString(),
+      }
+
+      const mockProduct = {
+        id: item.id,
+        brand_id: 'uc',
+        category_id: 'general',
+        name: item.name,
+        slug: item.slug,
+        description: '',
+        base_price: item.originalPrice ?? item.price,
+        sale_price: item.originalPrice ? item.price : null,
+        images: [item.image],
+        tags: [],
+        is_active: true,
+        is_featured: false,
+        total_sold: 0,
+        rating_avg: 0,
+        rating_count: 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+
+      addToCart(mockVariant, mockProduct, 1)
     })
-    toast.success(t.account.wishlist === 'Favorit' ? 'Semua item ditambahkan ke keranjang' : 'All items added to cart')
+    toast.success(language === 'id' ? 'Semua item ditambahkan ke keranjang' : 'All items added to cart')
+    openCart()
   }
 
   return (
@@ -58,7 +113,7 @@ export default function WishlistPage() {
           {items.length > 0 && (
             <Button variant="outline" onClick={handleAddAllToCart}>
               <ShoppingBag className="h-4 w-4 mr-2" />
-              {t.account.wishlist === 'Favorit' ? 'Tambah Semua ke Keranjang' : 'Add All to Cart'}
+              {language === 'id' ? 'Tambah Semua ke Keranjang' : 'Add All to Cart'}
             </Button>
           )}
         </div>
@@ -67,14 +122,14 @@ export default function WishlistPage() {
           <div className="text-center py-12">
             <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-lg font-medium mb-2">
-              {t.account.wishlist === 'Favorit' ? 'Favorit Anda kosong' : 'Your wishlist is empty'}
+              {language === 'id' ? 'Favorit Anda kosong' : 'Your wishlist is empty'}
             </p>
             <p className="text-muted-foreground mb-6">
-              {t.account.wishlist === 'Favorit' ? 'Simpan item yang Anda suka untuk nanti' : 'Save items you love for later'}
+              {language === 'id' ? 'Simpan item yang Anda suka untuk nanti' : 'Save items you love for later'}
             </p>
             <Button asChild>
               <Link href="/products">
-                {t.account.wishlist === 'Favorit' ? 'Temukan Produk' : 'Discover Products'}
+                {language === 'id' ? 'Temukan Produk' : 'Discover Products'}
               </Link>
             </Button>
           </div>

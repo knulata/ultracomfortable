@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle, Package, ArrowRight } from 'lucide-react'
+import { CheckCircle, Package, ArrowRight, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/stores/language'
 import { useCartStore, formatPrice } from '@/stores/cart'
 import confetti from 'canvas-confetti'
 
-export default function CheckoutSuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order_id') || 'UC-000000'
   const { t, language } = useTranslation()
@@ -129,5 +129,13 @@ export default function CheckoutSuccessPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>}>
+      <SuccessContent />
+    </Suspense>
   )
 }

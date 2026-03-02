@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Search, X, SlidersHorizontal, Heart } from 'lucide-react'
+import { Search, X, SlidersHorizontal, Heart, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/stores/cart'
 import { useTranslation } from '@/stores/language'
@@ -46,7 +46,7 @@ const popularSearches = [
   { en: 'skincare', id: 'skincare' },
 ]
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams()
   const initialQuery = searchParams.get('q') || ''
   const [query, setQuery] = useState(initialQuery)
@@ -262,5 +262,21 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  )
+}
+
+function SearchLoading() {
+  return (
+    <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<SearchLoading />}>
+      <SearchContent />
+    </Suspense>
   )
 }
