@@ -17,11 +17,11 @@ export function Header() {
   const categories = [
     { name: t.nav.newIn, href: '/new' },
     { name: t.nav.originals, href: '/originals', isOriginals: true },
+    { name: t.nav.style, href: '/style' },
     { name: t.nav.women, href: '/women' },
     { name: t.nav.men, href: '/men' },
     { name: t.nav.kids, href: '/kids' },
     { name: t.nav.beauty, href: '/beauty' },
-    { name: t.nav.lifestyle, href: '/lifestyle' },
     { name: t.nav.sale, href: '/sale', highlight: true },
   ]
 
