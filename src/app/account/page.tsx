@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Package, Heart, MapPin, Gift, ChevronRight, Truck, CheckCircle, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/stores/cart'
+import { ReferralBanner } from '@/components/referral'
 
 // Mock data
 const mockUser = {
@@ -175,6 +176,9 @@ export default function AccountDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Referral Banner */}
+      <ReferralBanner />
 
       {/* Recent Orders */}
       <div className="bg-background rounded-xl p-6">

@@ -6,6 +6,10 @@ import { Button } from '@/components/ui/button'
 import { useCartStore, formatPrice } from '@/stores/cart'
 import { useTranslation } from '@/stores/language'
 import { LanguageToggle, LanguageToggleCompact } from '@/components/layout/LanguageToggle'
+import { CheckInButton } from '@/components/check-in'
+import { FlashSaleBanner } from '@/components/flash-sale'
+import { NotificationBell } from '@/components/notifications'
+import { useFlashSaleStore } from '@/stores/flashSale'
 import { useState } from 'react'
 
 export function Header() {
@@ -13,6 +17,8 @@ export function Header() {
   const { items, openCart, getItemCount } = useCartStore()
   const { t } = useTranslation()
   const itemCount = getItemCount()
+  const { getActiveFlashSale, getUpcomingFlashSales } = useFlashSaleStore()
+  const hasFlashSale = getActiveFlashSale() || getUpcomingFlashSales().length > 0
 
   const categories = [
     { name: t.nav.newIn, href: '/new' },
@@ -27,10 +33,14 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border">
-      {/* Top Bar */}
-      <div className="bg-secondary text-secondary-foreground text-xs py-1.5 text-center">
-        <p>{t.nav.freeShipping}</p>
-      </div>
+      {/* Top Bar - Flash Sale or Free Shipping */}
+      {hasFlashSale ? (
+        <FlashSaleBanner variant="compact" />
+      ) : (
+        <div className="bg-secondary text-secondary-foreground text-xs py-1.5 text-center">
+          <p>{t.nav.freeShipping}</p>
+        </div>
+      )}
 
       {/* Main Header */}
       <div className="container mx-auto px-4">
@@ -77,6 +87,11 @@ export function Header() {
               <LanguageToggleCompact />
             </div>
 
+            {/* Daily Check-in */}
+            <div className="hidden sm:block">
+              <CheckInButton variant="compact" />
+            </div>
+
             {/* Search */}
             <Link href="/search" className="p-2" aria-label={t.nav.search}>
               <Search className="h-5 w-5" />
@@ -86,6 +101,11 @@ export function Header() {
             <Link href="/account/wishlist" className="p-2 hidden sm:block" aria-label={t.nav.wishlist}>
               <Heart className="h-5 w-5" />
             </Link>
+
+            {/* Notifications */}
+            <div className="hidden sm:block">
+              <NotificationBell />
+            </div>
 
             {/* Account */}
             <Link href="/account" className="p-2 hidden sm:block" aria-label={t.nav.account}>

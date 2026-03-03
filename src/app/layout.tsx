@@ -8,6 +8,7 @@ import { CartDrawer } from "@/components/cart/CartDrawer";
 import { EngagementHub } from "@/components/engagement/EngagementHub";
 import { LiveActivityFeed } from "@/components/engagement/LiveActivityFeed";
 import { UCStylist, StylistButton } from "@/components/stylist";
+import { CheckInModal } from "@/components/check-in";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
           <LiveActivityFeed />
           <StylistButton />
           <UCStylist />
+          <CheckInModal />
         </Providers>
       </body>
     </html>

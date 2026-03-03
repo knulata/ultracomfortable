@@ -7,6 +7,9 @@ import { ArrowRight, Truck, RotateCcw, Shield, Clock, Heart } from 'lucide-react
 import { useTranslation } from '@/stores/language'
 import { formatPrice, useCartStore } from '@/stores/cart'
 import { useWishlistStore } from '@/stores/wishlist'
+import { CheckInButton } from '@/components/check-in'
+import { FlashSaleSection } from '@/components/flash-sale'
+import { RecentlyViewedSection } from '@/components/recently-viewed'
 import { toast } from 'sonner'
 
 // Mock trending products
@@ -18,37 +21,9 @@ const trendingProducts = [
   { id: 't5', name: 'Cropped Cardigan', nameId: 'Kardigan Crop', price: 349000, originalPrice: 449000, rating: 4.5, reviews: 98, sold: 430 },
 ].map(p => ({ ...p, slug: p.name.toLowerCase().replace(/\s+/g, '-') }))
 
-// Flash sale end time (24 hours from now for demo)
-const getFlashSaleEndTime = () => {
-  const end = new Date()
-  end.setHours(end.getHours() + 12)
-  return end
-}
-
 export default function HomePage() {
   const { t, language } = useTranslation()
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore()
-  const [flashSaleEnd] = useState(getFlashSaleEndTime)
-  const [countdown, setCountdown] = useState({ hours: 0, mins: 0, secs: 0 })
-
-  // Countdown timer
-  useEffect(() => {
-    const updateCountdown = () => {
-      const now = new Date()
-      const diff = flashSaleEnd.getTime() - now.getTime()
-
-      if (diff > 0) {
-        const hours = Math.floor(diff / (1000 * 60 * 60))
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-        const secs = Math.floor((diff % (1000 * 60)) / 1000)
-        setCountdown({ hours, mins, secs })
-      }
-    }
-
-    updateCountdown()
-    const interval = setInterval(updateCountdown, 1000)
-    return () => clearInterval(interval)
-  }, [flashSaleEnd])
 
   const toggleWishlist = (product: typeof trendingProducts[0]) => {
     if (isInWishlist(product.id)) {
@@ -135,6 +110,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Daily Check-in Banner */}
+      <section className="py-6 bg-background">
+        <div className="container mx-auto px-4">
+          <CheckInButton variant="banner" />
+        </div>
+      </section>
+
       {/* Shop by Category */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -169,37 +151,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Flash Sale Banner */}
-      <section className="bg-gradient-to-r from-red-500 to-orange-500 py-8 md:py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-white">
-            <div>
-              <span className="text-sm font-medium opacity-80">{t.home.limitedTime}</span>
-              <h2 className="text-2xl md:text-3xl font-bold">{t.home.flashSale}</h2>
-            </div>
-            <div className="flex items-center gap-4">
-              {/* Countdown Timer */}
-              <div className="flex gap-2">
-                {[
-                  { value: countdown.hours.toString().padStart(2, '0'), label: language === 'id' ? 'Jam' : 'Hours' },
-                  { value: countdown.mins.toString().padStart(2, '0'), label: language === 'id' ? 'Menit' : 'Mins' },
-                  { value: countdown.secs.toString().padStart(2, '0'), label: language === 'id' ? 'Detik' : 'Secs' },
-                ].map((item, i) => (
-                  <div key={i} className="bg-white/20 backdrop-blur rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <span className="text-2xl font-bold">{item.value}</span>
-                    <span className="block text-xs">{item.label}</span>
-                  </div>
-                ))}
-              </div>
-              <Button variant="secondary" size="lg" asChild>
-                <Link href="/sale">
-                  {t.home.shopNow}
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Flash Sale Section */}
+      <FlashSaleSection maxProducts={6} />
 
       {/* Trending Now */}
       <section className="py-16">
@@ -279,6 +232,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Recently Viewed */}
+      <RecentlyViewedSection maxItems={10} />
 
       {/* Newsletter CTA */}
       <section className="bg-secondary py-16">

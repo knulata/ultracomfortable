@@ -1,14 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ChevronRight, Heart, Share2, Truck, RotateCcw, Shield, Minus, Plus, Star, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCartStore, formatPrice } from '@/stores/cart'
 import { useTranslation } from '@/stores/language'
 import { useWishlistStore } from '@/stores/wishlist'
+import { useRecentlyViewedStore } from '@/stores/recentlyViewed'
 import { ViewingNow, RecentSales } from '@/components/engagement/LiveActivityFeed'
 import { CompleteTheLook, getSuggestedOutfit } from '@/components/engagement/CompleteTheLook'
+import { ProductReviews } from '@/components/reviews'
+import { RecentlyViewedSection } from '@/components/recently-viewed'
+import { ProductRecommendations } from '@/components/recommendations'
+import { SizeGuideModal } from '@/components/size-guide'
+import { useSizeGuideStore } from '@/stores/sizeGuide'
 import { toast } from 'sonner'
 
 // Mock product data
@@ -55,44 +61,6 @@ Key Features:
   ],
 }
 
-const mockReviews = [
-  {
-    id: 'r1',
-    user: 'Sarah M.',
-    rating: 5,
-    title: 'Best t-shirt I own!',
-    content: 'The quality is amazing and the fit is perfect. I ordered my usual size and it has that perfect oversized look without being too baggy.',
-    size_feedback: 'true_to_size',
-    images: [],
-    helpful_count: 24,
-    created_at: '2026-02-15',
-    is_verified: true,
-  },
-  {
-    id: 'r2',
-    user: 'Budi K.',
-    rating: 4,
-    title: 'Great quality, runs slightly large',
-    content: 'Love the fabric quality but it runs a bit larger than expected. Would recommend sizing down if you prefer a less oversized look.',
-    size_feedback: 'runs_large',
-    images: [],
-    helpful_count: 18,
-    created_at: '2026-02-10',
-    is_verified: true,
-  },
-  {
-    id: 'r3',
-    user: 'Dewi S.',
-    rating: 5,
-    title: 'Super comfortable!',
-    content: 'Perfect for daily wear. The cotton is so soft and breathable. Already ordered in two more colors!',
-    size_feedback: 'true_to_size',
-    images: [],
-    helpful_count: 12,
-    created_at: '2026-02-05',
-    is_verified: true,
-  },
-]
 
 export default function ProductDetailPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
@@ -103,8 +71,25 @@ export default function ProductDetailPage() {
   const { t, language } = useTranslation()
   const { addItem, openCart } = useCartStore()
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore()
+  const { addProduct: addToRecentlyViewed } = useRecentlyViewedStore()
+  const { openSizeGuide } = useSizeGuideStore()
 
   const isWishlisted = isInWishlist(mockProduct.id)
+
+  // Track product view
+  useEffect(() => {
+    addToRecentlyViewed({
+      id: mockProduct.id,
+      slug: mockProduct.slug,
+      name: mockProduct.name,
+      nameId: 'Kaos Oversized Premium',
+      price: mockProduct.sale_price ?? mockProduct.base_price,
+      originalPrice: mockProduct.sale_price ? mockProduct.base_price : undefined,
+      category: mockProduct.category.slug,
+      rating: mockProduct.rating_avg,
+      reviewCount: mockProduct.rating_count,
+    })
+  }, [addToRecentlyViewed])
 
   const toggleWishlist = () => {
     if (isWishlisted) {
@@ -345,7 +330,12 @@ export default function ProductDetailPage() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-medium">Size: <span className="font-normal">{selectedSize || 'Select'}</span></span>
-                <button className="text-sm text-primary hover:underline">Size Guide</button>
+                <button
+                  onClick={() => openSizeGuide('tops')}
+                  className="text-sm text-primary hover:underline"
+                >
+                  {language === 'id' ? 'Panduan Ukuran' : 'Size Guide'}
+                </button>
               </div>
               <div className="grid grid-cols-4 gap-2">
                 {sizes.map((size) => {
@@ -459,137 +449,41 @@ export default function ProductDetailPage() {
           />
         </section>
 
+        {/* Product Recommendations */}
+        <section className="mt-16">
+          <ProductRecommendations
+            productId={mockProduct.id}
+            category={mockProduct.category.slug}
+            type="similar"
+            maxItems={6}
+          />
+        </section>
+
+        <section className="mt-8">
+          <ProductRecommendations
+            productId={mockProduct.id}
+            type="also_bought"
+            title="Frequently Bought Together"
+            titleId="Sering Dibeli Bersama"
+            maxItems={4}
+            variant="grid"
+          />
+        </section>
+
         {/* Reviews Section */}
         <section className="mt-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">{t.productDetail.customerReviews}</h2>
-            <Button variant="outline">{t.productDetail.writeReview}</Button>
-          </div>
-
-          {/* Review Summary */}
-          <div className="bg-muted/50 rounded-xl p-6 mb-8">
-            <div className="flex flex-col md:flex-row gap-8">
-              {/* Overall Rating */}
-              <div className="text-center md:pr-8 md:border-r">
-                <div className="text-5xl font-bold">{mockProduct.rating_avg}</div>
-                <div className="flex justify-center my-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      className={`h-5 w-5 ${
-                        star <= Math.round(mockProduct.rating_avg)
-                          ? 'text-yellow-400 fill-yellow-400'
-                          : 'text-muted-foreground'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Based on {mockProduct.rating_count} reviews
-                </p>
-              </div>
-
-              {/* Rating Bars */}
-              <div className="flex-1 space-y-2">
-                {[5, 4, 3, 2, 1].map((rating) => {
-                  const percent = rating === 5 ? 70 : rating === 4 ? 20 : rating === 3 ? 7 : 3
-                  return (
-                    <div key={rating} className="flex items-center gap-3">
-                      <span className="text-sm w-3">{rating}</span>
-                      <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                      <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-yellow-400 rounded-full"
-                          style={{ width: `${percent}%` }}
-                        />
-                      </div>
-                      <span className="text-sm text-muted-foreground w-10">{percent}%</span>
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* Size Feedback */}
-              <div className="md:pl-8 md:border-l">
-                <p className="font-medium mb-3">Size Feedback</p>
-                <div className="flex gap-4">
-                  {[
-                    { label: 'Runs Small', value: 10 },
-                    { label: 'True to Size', value: 80 },
-                    { label: 'Runs Large', value: 10 },
-                  ].map((item) => (
-                    <div key={item.label} className="text-center">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-1">
-                        <span className="text-sm font-medium">{item.value}%</span>
-                      </div>
-                      <span className="text-xs text-muted-foreground">{item.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Review List */}
-          <div className="space-y-6">
-            {mockReviews.map((review) => (
-              <div key={review.id} className="border-b pb-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{review.user}</span>
-                      {review.is_verified && (
-                        <span className="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded">
-                          Verified Purchase
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
-                            key={star}
-                            className={`h-4 w-4 ${
-                              star <= review.rating
-                                ? 'text-yellow-400 fill-yellow-400'
-                                : 'text-muted-foreground'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm text-muted-foreground">{review.created_at}</span>
-                    </div>
-                  </div>
-                  {review.size_feedback && (
-                    <span className="text-xs px-2 py-1 bg-muted rounded">
-                      {review.size_feedback === 'true_to_size' ? 'True to Size' :
-                       review.size_feedback === 'runs_small' ? 'Runs Small' : 'Runs Large'}
-                    </span>
-                  )}
-                </div>
-
-                {review.title && (
-                  <h4 className="font-medium mt-3">{review.title}</h4>
-                )}
-                <p className="text-sm text-muted-foreground mt-2">{review.content}</p>
-
-                <div className="flex items-center gap-4 mt-3">
-                  <button className="text-sm text-muted-foreground hover:text-foreground">
-                    Helpful ({review.helpful_count})
-                  </button>
-                  <button className="text-sm text-muted-foreground hover:text-foreground">
-                    Report
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Button variant="outline">Load More Reviews</Button>
-          </div>
+          <ProductReviews
+            productId={mockProduct.id}
+            productName={mockProduct.name}
+          />
         </section>
       </div>
+
+      {/* Recently Viewed */}
+      <RecentlyViewedSection excludeProductId={mockProduct.id} maxItems={8} />
+
+      {/* Size Guide Modal */}
+      <SizeGuideModal />
     </div>
   )
 }

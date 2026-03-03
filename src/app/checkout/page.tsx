@@ -1,19 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronRight, ChevronLeft, ShoppingBag, MapPin, CreditCard, Check, Truck, Shield, Lock } from 'lucide-react'
+import { ChevronRight, ChevronLeft, ShoppingBag, MapPin, CreditCard, Check, Truck, Shield, Lock, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCartStore, formatPrice } from '@/stores/cart'
+import { useCouponStore } from '@/stores/coupon'
+import { useAddressesStore, Address, indonesianProvinces } from '@/stores/addresses'
+import { CouponInput } from '@/components/coupon'
+import { AddressSelector } from '@/components/addresses'
 import { toast } from 'sonner'
-
-// Indonesian provinces for dropdown
-const provinces = [
-  'DKI Jakarta', 'Jawa Barat', 'Jawa Tengah', 'Jawa Timur', 'Banten',
-  'Yogyakarta', 'Bali', 'Sumatera Utara', 'Sumatera Selatan', 'Kalimantan Timur',
-  'Sulawesi Selatan', 'Other'
-]
+import { useTranslation } from '@/stores/language'
 
 // Payment methods
 const paymentMethods = [
@@ -73,8 +71,25 @@ type CheckoutStep = 'cart' | 'shipping' | 'payment' | 'confirmation'
 
 export default function CheckoutPage() {
   const { items, getSubtotal, clearCart } = useCartStore()
+  const { appliedCoupon } = useCouponStore()
+  const { addresses, getDefaultAddress } = useAddressesStore()
+  const { language } = useTranslation()
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('shipping')
   const [isProcessing, setIsProcessing] = useState(false)
+
+  // Address mode: 'saved' or 'new'
+  const [addressMode, setAddressMode] = useState<'saved' | 'new'>(addresses.length > 0 ? 'saved' : 'new')
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null)
+
+  // Auto-select default address on mount
+  useEffect(() => {
+    if (addresses.length > 0 && !selectedAddress) {
+      const defaultAddr = getDefaultAddress()
+      if (defaultAddr) {
+        setSelectedAddress(defaultAddr)
+      }
+    }
+  }, [addresses, getDefaultAddress, selectedAddress])
 
   // Form state
   const [shippingForm, setShippingForm] = useState({
@@ -94,8 +109,10 @@ export default function CheckoutPage() {
   // Calculations
   const subtotal = getSubtotal()
   const shippingCost = shippingOptions.find(o => o.id === selectedShipping)?.price ?? 0
-  const discount = 0 // Would come from coupon
-  const total = subtotal + shippingCost - discount
+  const couponDiscount = appliedCoupon?.discountAmount ?? 0
+  const isFreeShippingCoupon = appliedCoupon?.coupon.type === 'free_shipping'
+  const effectiveShippingCost = isFreeShippingCoupon ? 0 : shippingCost
+  const total = subtotal + effectiveShippingCost - couponDiscount
 
   // Free shipping threshold
   const freeShippingThreshold = 500000
@@ -105,11 +122,29 @@ export default function CheckoutPage() {
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate form
-    if (!shippingForm.fullName || !shippingForm.phone || !shippingForm.address ||
-        !shippingForm.city || !shippingForm.province || !shippingForm.postalCode) {
-      toast.error('Please fill in all required fields')
-      return
+    if (addressMode === 'saved') {
+      if (!selectedAddress) {
+        toast.error(language === 'id' ? 'Pilih alamat pengiriman' : 'Please select a delivery address')
+        return
+      }
+      // Populate form from selected address for display on payment page
+      setShippingForm({
+        fullName: selectedAddress.fullName,
+        phone: selectedAddress.phone,
+        email: shippingForm.email, // Keep email from form
+        address: selectedAddress.address,
+        city: selectedAddress.city,
+        province: selectedAddress.province,
+        postalCode: selectedAddress.postalCode,
+        notes: selectedAddress.notes || '',
+      })
+    } else {
+      // Validate form
+      if (!shippingForm.fullName || !shippingForm.phone || !shippingForm.address ||
+          !shippingForm.city || !shippingForm.province || !shippingForm.postalCode) {
+        toast.error(language === 'id' ? 'Lengkapi semua kolom wajib' : 'Please fill in all required fields')
+        return
+      }
     }
 
     setCurrentStep('payment')
@@ -245,124 +280,183 @@ export default function CheckoutPage() {
                 <div className="bg-background rounded-xl p-6">
                   <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-primary" />
-                    Shipping Address
+                    {language === 'id' ? 'Alamat Pengiriman' : 'Shipping Address'}
                   </h2>
 
                   <form onSubmit={handleShippingSubmit} className="space-y-4">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5">
-                          Full Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          value={shippingForm.fullName}
-                          onChange={(e) => setShippingForm({ ...shippingForm, fullName: e.target.value })}
-                          className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          placeholder="John Doe"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5">
-                          Phone Number <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          value={shippingForm.phone}
-                          onChange={(e) => setShippingForm({ ...shippingForm, phone: e.target.value })}
-                          className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          placeholder="08xxxxxxxxxx"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1.5">
-                        Email <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        value={shippingForm.email}
-                        onChange={(e) => setShippingForm({ ...shippingForm, email: e.target.value })}
-                        className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="john@example.com"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1.5">
-                        Address <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        value={shippingForm.address}
-                        onChange={(e) => setShippingForm({ ...shippingForm, address: e.target.value })}
-                        className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                        rows={3}
-                        placeholder="Street address, apartment, building, etc."
-                        required
-                      />
-                    </div>
-
-                    <div className="grid sm:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5">
-                          City <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          value={shippingForm.city}
-                          onChange={(e) => setShippingForm({ ...shippingForm, city: e.target.value })}
-                          className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          placeholder="Jakarta Selatan"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5">
-                          Province <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          value={shippingForm.province}
-                          onChange={(e) => setShippingForm({ ...shippingForm, province: e.target.value })}
-                          className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-                          required
+                    {/* Address Mode Toggle */}
+                    {addresses.length > 0 && (
+                      <div className="flex gap-2 mb-4">
+                        <button
+                          type="button"
+                          className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-colors ${
+                            addressMode === 'saved'
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted hover:bg-muted/80'
+                          }`}
+                          onClick={() => setAddressMode('saved')}
                         >
-                          <option value="">Select</option>
-                          {provinces.map((p) => (
-                            <option key={p} value={p}>{p}</option>
-                          ))}
-                        </select>
+                          {language === 'id' ? 'Alamat Tersimpan' : 'Saved Addresses'}
+                        </button>
+                        <button
+                          type="button"
+                          className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-colors ${
+                            addressMode === 'new'
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted hover:bg-muted/80'
+                          }`}
+                          onClick={() => setAddressMode('new')}
+                        >
+                          {language === 'id' ? 'Alamat Baru' : 'New Address'}
+                        </button>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1.5">
-                          Postal Code <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          value={shippingForm.postalCode}
-                          onChange={(e) => setShippingForm({ ...shippingForm, postalCode: e.target.value })}
-                          className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          placeholder="12345"
-                          required
-                        />
-                      </div>
-                    </div>
+                    )}
 
-                    <div>
-                      <label className="block text-sm font-medium mb-1.5">
-                        Delivery Notes (Optional)
-                      </label>
-                      <input
-                        type="text"
-                        value={shippingForm.notes}
-                        onChange={(e) => setShippingForm({ ...shippingForm, notes: e.target.value })}
-                        className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="Gate code, landmark, etc."
-                      />
-                    </div>
+                    {/* Saved Address Selector */}
+                    {addressMode === 'saved' && addresses.length > 0 && (
+                      <div className="space-y-4">
+                        <AddressSelector
+                          selectedAddressId={selectedAddress?.id}
+                          onSelect={(addr) => setSelectedAddress(addr)}
+                          variant="compact"
+                        />
+
+                        {/* Email field (still needed for confirmation) */}
+                        <div className="pt-4 border-t">
+                          <label className="block text-sm font-medium mb-1.5">
+                            Email <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            value={shippingForm.email}
+                            onChange={(e) => setShippingForm({ ...shippingForm, email: e.target.value })}
+                            className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="john@example.com"
+                            required
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* New Address Form */}
+                    {addressMode === 'new' && (
+                      <>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium mb-1.5">
+                              {language === 'id' ? 'Nama Lengkap' : 'Full Name'} <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              value={shippingForm.fullName}
+                              onChange={(e) => setShippingForm({ ...shippingForm, fullName: e.target.value })}
+                              className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                              placeholder="John Doe"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-1.5">
+                              {language === 'id' ? 'Nomor Telepon' : 'Phone Number'} <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="tel"
+                              value={shippingForm.phone}
+                              onChange={(e) => setShippingForm({ ...shippingForm, phone: e.target.value })}
+                              className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                              placeholder="08xxxxxxxxxx"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium mb-1.5">
+                            Email <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            value={shippingForm.email}
+                            onChange={(e) => setShippingForm({ ...shippingForm, email: e.target.value })}
+                            className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="john@example.com"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium mb-1.5">
+                            {language === 'id' ? 'Alamat' : 'Address'} <span className="text-red-500">*</span>
+                          </label>
+                          <textarea
+                            value={shippingForm.address}
+                            onChange={(e) => setShippingForm({ ...shippingForm, address: e.target.value })}
+                            className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                            rows={3}
+                            placeholder={language === 'id' ? 'Nama jalan, nomor rumah, RT/RW' : 'Street address, apartment, building, etc.'}
+                            required
+                          />
+                        </div>
+
+                        <div className="grid sm:grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium mb-1.5">
+                              {language === 'id' ? 'Kota' : 'City'} <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              value={shippingForm.city}
+                              onChange={(e) => setShippingForm({ ...shippingForm, city: e.target.value })}
+                              className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                              placeholder="Jakarta Selatan"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-1.5">
+                              {language === 'id' ? 'Provinsi' : 'Province'} <span className="text-red-500">*</span>
+                            </label>
+                            <select
+                              value={shippingForm.province}
+                              onChange={(e) => setShippingForm({ ...shippingForm, province: e.target.value })}
+                              className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+                              required
+                            >
+                              <option value="">{language === 'id' ? 'Pilih' : 'Select'}</option>
+                              {indonesianProvinces.map((p) => (
+                                <option key={p} value={p}>{p}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-1.5">
+                              {language === 'id' ? 'Kode Pos' : 'Postal Code'} <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              value={shippingForm.postalCode}
+                              onChange={(e) => setShippingForm({ ...shippingForm, postalCode: e.target.value })}
+                              className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                              placeholder="12345"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium mb-1.5">
+                            {language === 'id' ? 'Catatan Pengiriman (Opsional)' : 'Delivery Notes (Optional)'}
+                          </label>
+                          <input
+                            type="text"
+                            value={shippingForm.notes}
+                            onChange={(e) => setShippingForm({ ...shippingForm, notes: e.target.value })}
+                            className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder={language === 'id' ? 'Patokan, kode gerbang, dll.' : 'Gate code, landmark, etc.'}
+                          />
+                        </div>
+                      </>
+                    )}
 
                     {/* Shipping Method */}
                     <div className="pt-4 border-t">
@@ -401,7 +495,7 @@ export default function CheckoutPage() {
                     </div>
 
                     <Button type="submit" size="lg" className="w-full">
-                      Continue to Payment
+                      {language === 'id' ? 'Lanjut ke Pembayaran' : 'Continue to Payment'}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
@@ -534,15 +628,8 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Coupon Code */}
-                <div className="flex gap-2 mb-4">
-                  <input
-                    type="text"
-                    placeholder="Coupon code"
-                    className="flex-1 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <Button variant="outline" size="sm">
-                    Apply
-                  </Button>
+                <div className="mb-4">
+                  <CouponInput cartTotal={subtotal} />
                 </div>
 
                 {/* Totals */}
@@ -553,14 +640,14 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Shipping</span>
-                    <span className={qualifiesForFreeShipping && selectedShipping === 'regular' ? 'text-green-600' : ''}>
-                      {qualifiesForFreeShipping && selectedShipping === 'regular' ? 'FREE' : formatPrice(shippingCost)}
+                    <span className={(qualifiesForFreeShipping && selectedShipping === 'regular') || isFreeShippingCoupon ? 'text-green-600' : ''}>
+                      {(qualifiesForFreeShipping && selectedShipping === 'regular') || isFreeShippingCoupon ? 'FREE' : formatPrice(shippingCost)}
                     </span>
                   </div>
-                  {discount > 0 && (
+                  {couponDiscount > 0 && (
                     <div className="flex justify-between text-sm text-green-600">
-                      <span>Discount</span>
-                      <span>-{formatPrice(discount)}</span>
+                      <span>Coupon ({appliedCoupon?.coupon.code})</span>
+                      <span>-{formatPrice(couponDiscount)}</span>
                     </div>
                   )}
                 </div>

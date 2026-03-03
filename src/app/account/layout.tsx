@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { User, Package, Heart, MapPin, Settings, Gift, LogOut, ChevronRight } from 'lucide-react'
+import { User, Package, Heart, MapPin, Settings, Gift, Users, Flame, Tag, LogOut, ChevronRight } from 'lucide-react'
 
 const sidebarLinks = [
   { href: '/account', label: 'Dashboard', icon: User, exact: true },
@@ -10,6 +10,9 @@ const sidebarLinks = [
   { href: '/account/wishlist', label: 'Wishlist', icon: Heart },
   { href: '/account/addresses', label: 'Addresses', icon: MapPin },
   { href: '/account/points', label: 'UC Points', icon: Gift },
+  { href: '/account/coupons', label: 'Coupons', icon: Tag },
+  { href: '/account/check-in', label: 'Daily Check-in', icon: Flame },
+  { href: '/account/referrals', label: 'Referrals', icon: Users },
   { href: '/account/settings', label: 'Settings', icon: Settings },
 ]
 

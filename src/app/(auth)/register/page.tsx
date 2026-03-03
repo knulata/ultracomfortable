@@ -1,16 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, User, Phone, Loader2, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ReferralCodeInput } from '@/components/referral'
+import { useReferralStore } from '@/stores/referral'
 import { toast } from 'sonner'
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const { setUsedReferralCode } = useReferralStore()
+
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [referralValid, setReferralValid] = useState(false)
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -20,6 +26,14 @@ export default function RegisterPage() {
     agreeTerms: false,
     agreeMarketing: false,
   })
+
+  // Check for referral code in URL
+  useEffect(() => {
+    const refCode = searchParams.get('ref')
+    if (refCode) {
+      setForm(prev => ({ ...prev, referralCode: refCode.toUpperCase() }))
+    }
+  }, [searchParams])
 
   const passwordRequirements = [
     { label: 'At least 8 characters', met: form.password.length >= 8 },
@@ -46,6 +60,11 @@ export default function RegisterPage() {
     await new Promise(resolve => setTimeout(resolve, 1500))
 
     // In real implementation, this would call Supabase auth
+    // Save referral code if valid
+    if (form.referralCode && referralValid) {
+      setUsedReferralCode(form.referralCode)
+    }
+
     toast.success('Account created! Please verify your email.')
     router.push('/verify?email=' + encodeURIComponent(form.email))
     setIsLoading(false)
@@ -175,16 +194,11 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1.5">Referral Code (Optional)</label>
-          <input
-            type="text"
-            value={form.referralCode}
-            onChange={(e) => setForm({ ...form, referralCode: e.target.value.toUpperCase() })}
-            className="w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary font-mono"
-            placeholder="ABCD1234"
-          />
-        </div>
+        <ReferralCodeInput
+          value={form.referralCode}
+          onChange={(value) => setForm({ ...form, referralCode: value })}
+          onValidated={setReferralValid}
+        />
 
         {/* Agreements */}
         <div className="space-y-3">
@@ -236,5 +250,17 @@ export default function RegisterPage() {
         </Link>
       </p>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    }>
+      <RegisterContent />
+    </Suspense>
   )
 }
