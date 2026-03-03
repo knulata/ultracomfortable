@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { EngagementHub } from "@/components/engagement/EngagementHub";
 import { LiveActivityFeed } from "@/components/engagement/LiveActivityFeed";
+import { UCStylist, StylistButton } from "@/components/stylist";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,8 @@ export default function RootLayout({
           <CartDrawer />
           <EngagementHub />
           <LiveActivityFeed />
+          <StylistButton />
+          <UCStylist />
         </Providers>
       </body>
     </html>
