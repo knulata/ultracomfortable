@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Search, ShoppingBag, User, Menu, Heart, X } from 'lucide-react'
+import { Search, ShoppingBag, User, Menu, Heart, X, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCartStore, formatPrice } from '@/stores/cart'
 import { useTranslation } from '@/stores/language'
@@ -16,6 +16,7 @@ export function Header() {
 
   const categories = [
     { name: t.nav.newIn, href: '/new' },
+    { name: t.nav.originals, href: '/originals', isOriginals: true },
     { name: t.nav.women, href: '/women' },
     { name: t.nav.men, href: '/men' },
     { name: t.nav.kids, href: '/kids' },
@@ -58,8 +59,9 @@ export function Header() {
                 href={category.href}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   category.highlight ? 'text-red-500' : ''
-                }`}
+                } ${(category as any).isOriginals ? 'flex items-center gap-1' : ''}`}
               >
+                {(category as any).isOriginals && <Sparkles className="h-3.5 w-3.5 text-primary" />}
                 {category.name}
               </Link>
             ))}
@@ -136,11 +138,12 @@ export function Header() {
                 <Link
                   key={category.name}
                   href={category.href}
-                  className={`block py-3 px-4 text-base font-medium rounded-lg hover:bg-muted transition-colors ${
+                  className={`flex items-center gap-2 py-3 px-4 text-base font-medium rounded-lg hover:bg-muted transition-colors ${
                     category.highlight ? 'text-red-500' : ''
-                  }`}
+                  } ${(category as any).isOriginals ? 'bg-primary/5' : ''}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
+                  {(category as any).isOriginals && <Sparkles className="h-4 w-4 text-primary" />}
                   {category.name}
                 </Link>
               ))}

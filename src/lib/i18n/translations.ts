@@ -3,6 +3,7 @@ export const translations = {
     // Navigation
     nav: {
       newIn: 'New In',
+      originals: 'UC Originals',
       women: 'Women',
       men: 'Men',
       kids: 'Kids',
@@ -276,6 +277,7 @@ export const translations = {
     // Navigation
     nav: {
       newIn: 'Baru',
+      originals: 'UC Originals',
       women: 'Wanita',
       men: 'Pria',
       kids: 'Anak',
