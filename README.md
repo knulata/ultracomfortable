@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UC (Ultra Comfortable)
+
+Indonesian fashion e-commerce platform — Comfort Meets Style.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 with App Router
+- **Language:** TypeScript
+- **Database:** Supabase (PostgreSQL)
+- **Payments:** Midtrans (GoPay, ShopeePay, DANA, OVO, QRIS, VA, Credit Card, BNPL)
+- **UI:** Tailwind CSS 4, shadcn/ui, Radix UI
+- **State:** Zustand + TanStack React Query
+
+## Features
+
+- Product catalog with categories (Women, Men, Kids, Beauty)
+- Full checkout flow with Midtrans payment gateway
+- User accounts with addresses, order history, wishlists
+- Reseller/grosir management with tiered wholesale pricing
+- Product Q&A, reviews, and size feedback
+- Flash sales, daily deals, and bundle discounts
+- Back-in-stock and price drop alerts
+- Loyalty points and referral program
+- UC Stylist (AI personal shopper)
+- UC Originals (exclusive collection)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env.local
+# Fill in your Supabase and Midtrans keys
+
+# Run database migrations
+# Apply supabase/migrations/*.sql to your Supabase project
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server-side only) |
+| `NEXT_PUBLIC_APP_URL` | Application URL |
+| `NEXT_PUBLIC_MIDTRANS_CLIENT_KEY` | Midtrans client key |
+| `MIDTRANS_SERVER_KEY` | Midtrans server key |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/              # Next.js App Router pages & API routes
+│   ├── api/          # Payment webhooks, cart API
+│   ├── account/      # User account pages
+│   ├── products/     # Product catalog
+│   └── ...
+├── components/       # React components (27 feature directories)
+├── lib/              # Supabase client, Midtrans client, utilities
+├── stores/           # Zustand state stores
+└── types/            # TypeScript type definitions
+supabase/
+└── migrations/       # Database schema migrations
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Database Migrations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `001_initial_schema.sql` — Core tables (profiles, products, orders, reviews, etc.)
+- `002_new_features.sql` — Resellers, Q&A, stock alerts, daily deals, bundles, price history
