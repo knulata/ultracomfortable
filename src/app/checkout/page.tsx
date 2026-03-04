@@ -158,13 +158,103 @@ export default function CheckoutPage() {
 
     setIsProcessing(true)
 
-    // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    try {
+      // 1. Create order in database
+      const orderItems = items.map((item) => ({
+        variantId: item.variantId,
+        quantity: item.quantity,
+        price: (item.product.sale_price ?? item.product.base_price) + item.variant.price_adjustment,
+        productName: item.product.name,
+        variantInfo: `${item.variant.color} / ${item.variant.size}`,
+      }))
 
-    // In real implementation, this would call Midtrans API
-    toast.success('Order placed successfully!')
-    setCurrentStep('confirmation')
-    setIsProcessing(false)
+      const orderRes = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: orderItems,
+          shippingAddress: {
+            name: shippingForm.fullName,
+            phone: shippingForm.phone,
+            address: shippingForm.address,
+            city: shippingForm.city,
+            province: shippingForm.province,
+            postalCode: shippingForm.postalCode,
+          },
+          shippingCost: effectiveShippingCost,
+          discount: couponDiscount,
+          subtotal,
+          total,
+          paymentMethod: selectedPayment,
+          notes: shippingForm.notes || undefined,
+        }),
+      })
+
+      if (!orderRes.ok) {
+        throw new Error('Failed to create order')
+      }
+
+      const { orderNumber } = await orderRes.json()
+
+      // 2. Create Midtrans payment token
+      const paymentRes = await fetch('/api/payments/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: orderNumber,
+          amount: total,
+          customerName: shippingForm.fullName,
+          customerEmail: shippingForm.email,
+          customerPhone: shippingForm.phone,
+          shippingAddress: {
+            name: shippingForm.fullName,
+            address: shippingForm.address,
+            city: shippingForm.city,
+            postalCode: shippingForm.postalCode,
+          },
+          items: orderItems.map((item) => ({
+            id: item.variantId,
+            name: item.productName,
+            price: item.price,
+            quantity: item.quantity,
+            category: 'Fashion',
+          })),
+        }),
+      })
+
+      if (!paymentRes.ok) {
+        throw new Error('Failed to create payment')
+      }
+
+      const { token, redirect_url } = await paymentRes.json()
+
+      // 3. Open Midtrans Snap popup or redirect
+      if (typeof window !== 'undefined' && (window as any).snap) {
+        ;(window as any).snap.pay(token, {
+          onSuccess: () => {
+            clearCart()
+            window.location.href = `/checkout/success?order_id=${orderNumber}`
+          },
+          onPending: () => {
+            window.location.href = `/checkout/pending?order_id=${orderNumber}`
+          },
+          onError: () => {
+            window.location.href = `/checkout/error?order_id=${orderNumber}`
+          },
+          onClose: () => {
+            setIsProcessing(false)
+            toast.info(language === 'id' ? 'Pembayaran belum selesai' : 'Payment not completed')
+          },
+        })
+      } else {
+        // Fallback: redirect to Midtrans payment page
+        window.location.href = redirect_url
+      }
+    } catch (error: any) {
+      console.error('Checkout error:', error)
+      toast.error(language === 'id' ? 'Gagal memproses pembayaran' : 'Failed to process payment')
+      setIsProcessing(false)
+    }
   }
 
   // Empty cart state
