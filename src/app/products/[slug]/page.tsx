@@ -14,6 +14,7 @@ import { ProductReviews } from '@/components/reviews'
 import { RecentlyViewedSection } from '@/components/recently-viewed'
 import { ProductRecommendations } from '@/components/recommendations'
 import { FrequentlyBoughtTogether } from '@/components/frequently-bought'
+import { BackInStockAlert } from '@/components/stock-alerts'
 import { SizeGuideModal } from '@/components/size-guide'
 import { useSizeGuideStore } from '@/stores/sizeGuide'
 import { toast } from 'sonner'
@@ -345,14 +346,15 @@ export default function ProductDetailPage() {
                   return (
                     <button
                       key={size}
-                      onClick={() => isAvailable && setSelectedSize(size)}
-                      disabled={!isAvailable}
+                      onClick={() => setSelectedSize(size)}
                       className={`py-3 border rounded-lg font-medium transition-colors ${
                         isSelected
-                          ? 'border-primary bg-primary text-primary-foreground'
+                          ? isAvailable
+                            ? 'border-primary bg-primary text-primary-foreground'
+                            : 'border-amber-500 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
                           : isAvailable
                           ? 'border-border hover:border-primary'
-                          : 'border-border bg-muted text-muted-foreground line-through cursor-not-allowed'
+                          : 'border-border bg-muted text-muted-foreground line-through'
                       }`}
                     >
                       {size}
@@ -360,12 +362,25 @@ export default function ProductDetailPage() {
                   )
                 })}
               </div>
-              {selectedVariant && selectedVariant.stock <= 5 && (
+              {selectedVariant && selectedVariant.stock > 0 && selectedVariant.stock <= 5 && (
                 <p className="text-sm text-orange-500 mt-2">
                   Only {selectedVariant.stock} left in stock!
                 </p>
               )}
             </div>
+
+            {/* Back in Stock Alert - shown when out of stock variant is selected */}
+            {selectedVariant && selectedVariant.stock === 0 && (
+              <BackInStockAlert
+                productId={mockProduct.id}
+                productSlug={mockProduct.slug}
+                productName={mockProduct.name}
+                productNameId="Kaos Oversized Premium"
+                variantId={selectedVariant.id}
+                size={selectedVariant.size}
+                color={selectedVariant.color}
+              />
+            )}
 
             {/* Quantity */}
             <div>
@@ -400,9 +415,12 @@ export default function ProductDetailPage() {
                 size="lg"
                 className="flex-1"
                 onClick={handleAddToCart}
-                disabled={!selectedSize}
+                disabled={!selectedSize || (selectedVariant && selectedVariant.stock === 0)}
               >
-                Add to Cart - {formatPrice(finalPrice * quantity)}
+                {selectedVariant && selectedVariant.stock === 0
+                  ? (language === 'id' ? 'Stok Habis' : 'Out of Stock')
+                  : `Add to Cart - ${formatPrice(finalPrice * quantity)}`
+                }
               </Button>
               <Button size="lg" variant="outline" className="px-4">
                 <Share2 className="h-5 w-5" />

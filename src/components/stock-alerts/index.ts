@@ -1,0 +1,1 @@
+export { BackInStockAlert } from './BackInStockAlert'
