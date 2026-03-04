@@ -1,3 +1,5 @@
+'use client'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -21,6 +23,40 @@ export interface ReferralReward {
   referralId: string
   createdAt: Date
 }
+
+// Referral tiers for bonus multipliers
+export interface ReferralTier {
+  id: string
+  name: string
+  nameId: string
+  minReferrals: number
+  bonusMultiplier: number
+  badge: string
+  color: string
+}
+
+export const REFERRAL_TIERS: ReferralTier[] = [
+  { id: 'starter', name: 'Starter', nameId: 'Pemula', minReferrals: 0, bonusMultiplier: 1, badge: '🌱', color: 'text-gray-600 bg-gray-100' },
+  { id: 'advocate', name: 'Advocate', nameId: 'Pendukung', minReferrals: 3, bonusMultiplier: 1.25, badge: '⭐', color: 'text-blue-600 bg-blue-100' },
+  { id: 'ambassador', name: 'Ambassador', nameId: 'Duta', minReferrals: 10, bonusMultiplier: 1.5, badge: '🏆', color: 'text-purple-600 bg-purple-100' },
+  { id: 'champion', name: 'Champion', nameId: 'Juara', minReferrals: 25, bonusMultiplier: 2, badge: '👑', color: 'text-amber-600 bg-amber-100' },
+]
+
+// Mock leaderboard data
+export interface LeaderboardEntry {
+  rank: number
+  userName: string
+  referralCount: number
+  tier: ReferralTier
+}
+
+export const MOCK_LEADERBOARD: LeaderboardEntry[] = [
+  { rank: 1, userName: 'Anisa M.', referralCount: 47, tier: REFERRAL_TIERS[3] },
+  { rank: 2, userName: 'Rizky A.', referralCount: 32, tier: REFERRAL_TIERS[3] },
+  { rank: 3, userName: 'Dian P.', referralCount: 28, tier: REFERRAL_TIERS[3] },
+  { rank: 4, userName: 'Fajar S.', referralCount: 19, tier: REFERRAL_TIERS[2] },
+  { rank: 5, userName: 'Putri H.', referralCount: 15, tier: REFERRAL_TIERS[2] },
+]
 
 interface ReferralState {
   // User's referral code
@@ -47,6 +83,10 @@ interface ReferralState {
   setUsedReferralCode: (code: string) => void
   addReward: (reward: Omit<ReferralReward, 'id' | 'createdAt'>) => void
   getReferralLink: () => string
+  getCurrentTier: () => ReferralTier
+  getNextTier: () => ReferralTier | null
+  getReferralsToNextTier: () => number
+  getTierProgress: () => number
 }
 
 // Generate a unique referral code from user ID
@@ -203,9 +243,45 @@ export const useReferralStore = create<ReferralState>()(
         // In production, this would be the actual domain
         return `https://ultracomfortable.com/register?ref=${referralCode}`
       },
+
+      getCurrentTier: () => {
+        const { successfulReferrals } = get()
+        const tier = [...REFERRAL_TIERS]
+          .reverse()
+          .find((t) => successfulReferrals >= t.minReferrals)
+        return tier || REFERRAL_TIERS[0]
+      },
+
+      getNextTier: () => {
+        const currentTier = get().getCurrentTier()
+        const currentIndex = REFERRAL_TIERS.findIndex((t) => t.id === currentTier.id)
+        return currentIndex < REFERRAL_TIERS.length - 1
+          ? REFERRAL_TIERS[currentIndex + 1]
+          : null
+      },
+
+      getReferralsToNextTier: () => {
+        const nextTier = get().getNextTier()
+        if (!nextTier) return 0
+        return nextTier.minReferrals - get().successfulReferrals
+      },
+
+      getTierProgress: () => {
+        const currentTier = get().getCurrentTier()
+        const nextTier = get().getNextTier()
+        if (!nextTier) return 100
+        const current = get().successfulReferrals - currentTier.minReferrals
+        const total = nextTier.minReferrals - currentTier.minReferrals
+        return Math.round((current / total) * 100)
+      },
     }),
     {
       name: 'uc-referral-storage',
     }
   )
 )
+
+// Helper: Validate referral code format
+export function isValidReferralCode(code: string): boolean {
+  return /^UC[A-Z0-9]{4,10}$/i.test(code)
+}

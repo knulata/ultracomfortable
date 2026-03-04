@@ -13,11 +13,14 @@ import {
   CheckCircle,
   XCircle,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Crown,
+  TrendingUp,
+  Trophy
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/stores/language'
-import { useReferralStore, REFERRAL_CONFIG } from '@/stores/referral'
+import { useReferralStore, REFERRAL_CONFIG, REFERRAL_TIERS, MOCK_LEADERBOARD } from '@/stores/referral'
 import { toast } from 'sonner'
 
 export default function ReferralsPage() {
@@ -28,8 +31,17 @@ export default function ReferralsPage() {
     totalReferrals,
     successfulReferrals,
     totalPointsEarned,
-    getReferralLink
+    getReferralLink,
+    getCurrentTier,
+    getNextTier,
+    getReferralsToNextTier,
+    getTierProgress
   } = useReferralStore()
+
+  const currentTier = getCurrentTier()
+  const nextTier = getNextTier()
+  const referralsToNext = getReferralsToNextTier()
+  const tierProgress = getTierProgress()
 
   const [copied, setCopied] = useState(false)
 
@@ -107,6 +119,63 @@ export default function ReferralsPage() {
             ? 'Ajak teman dan dapatkan hadiah bersama'
             : 'Invite friends and earn rewards together'}
         </p>
+      </div>
+
+      {/* Current Tier & Progress */}
+      <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">{currentTier.badge}</span>
+            <div>
+              <p className="font-semibold">
+                {language === 'id' ? currentTier.nameId : currentTier.name}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {currentTier.bonusMultiplier > 1 && (
+                  <span className="text-primary font-medium">
+                    {currentTier.bonusMultiplier}x {language === 'id' ? 'bonus points' : 'bonus points'}
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+          {nextTier && (
+            <div className="text-right">
+              <p className="text-sm text-muted-foreground">
+                {language === 'id' ? 'Level berikutnya' : 'Next level'}
+              </p>
+              <p className="font-medium flex items-center gap-1">
+                <span>{nextTier.badge}</span>
+                {language === 'id' ? nextTier.nameId : nextTier.name}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {nextTier && (
+          <>
+            <div className="h-3 bg-muted rounded-full overflow-hidden mb-2">
+              <div
+                className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full transition-all"
+                style={{ width: `${tierProgress}%` }}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground text-center">
+              {language === 'id'
+                ? `${referralsToNext} referral lagi untuk ${nextTier.nameId}`
+                : `${referralsToNext} more referrals to ${nextTier.name}`}
+            </p>
+          </>
+        )}
+
+        {!nextTier && (
+          <div className="text-center py-2">
+            <p className="text-sm text-primary font-medium flex items-center justify-center gap-2">
+              <Crown className="h-4 w-4" />
+              {language === 'id' ? 'Level tertinggi tercapai!' : 'Highest level achieved!'}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Stats Cards */}
@@ -284,6 +353,84 @@ export default function ReferralsPage() {
         )}
       </div>
 
+      {/* Leaderboard */}
+      <div className="bg-gradient-to-br from-amber-500/5 to-orange-500/5 rounded-xl p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Trophy className="h-5 w-5 text-amber-500" />
+          <h2 className="font-semibold">
+            {language === 'id' ? 'Top Referrer Bulan Ini' : 'Top Referrers This Month'}
+          </h2>
+        </div>
+
+        <div className="space-y-3">
+          {MOCK_LEADERBOARD.map((entry, index) => (
+            <div
+              key={entry.rank}
+              className={`flex items-center gap-3 p-3 rounded-lg ${
+                index === 0
+                  ? 'bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/30 dark:to-yellow-900/30'
+                  : 'bg-background'
+              }`}
+            >
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                index === 0
+                  ? 'bg-amber-500 text-white'
+                  : index === 1
+                    ? 'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200'
+                    : index === 2
+                      ? 'bg-orange-300 dark:bg-orange-700 text-orange-800 dark:text-orange-100'
+                      : 'bg-muted text-muted-foreground'
+              }`}>
+                {entry.rank}
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-sm">{entry.userName}</p>
+                <p className="text-xs text-muted-foreground">
+                  {entry.referralCount} {language === 'id' ? 'referral' : 'referrals'}
+                </p>
+              </div>
+              <span className={`text-sm px-2 py-0.5 rounded-full ${entry.tier.color}`}>
+                {entry.tier.badge} {language === 'id' ? entry.tier.nameId : entry.tier.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Tier Benefits */}
+      <div className="bg-muted/30 rounded-xl p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <TrendingUp className="h-5 w-5 text-primary" />
+          <h2 className="font-semibold">
+            {language === 'id' ? 'Level & Keuntungan' : 'Tiers & Benefits'}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {REFERRAL_TIERS.map((tier) => (
+            <div
+              key={tier.id}
+              className={`p-3 rounded-lg text-center border-2 transition-colors ${
+                currentTier.id === tier.id
+                  ? 'border-primary bg-primary/5'
+                  : 'border-transparent bg-background'
+              }`}
+            >
+              <span className="text-2xl block mb-1">{tier.badge}</span>
+              <p className="font-medium text-sm">
+                {language === 'id' ? tier.nameId : tier.name}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {tier.minReferrals}+ {language === 'id' ? 'referral' : 'referrals'}
+              </p>
+              <p className="text-xs text-primary font-medium mt-1">
+                {tier.bonusMultiplier}x points
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Terms */}
       <div className="text-xs text-muted-foreground bg-muted/30 rounded-lg p-4">
         <p className="font-medium mb-2">
@@ -304,6 +451,11 @@ export default function ReferralsPage() {
             {language === 'id'
               ? 'Points dapat digunakan untuk potongan harga (100 points = Rp 1.000)'
               : 'Points can be redeemed for discounts (100 points = Rp 1,000)'}
+          </li>
+          <li>
+            {language === 'id'
+              ? 'Level naik berdasarkan jumlah referral berhasil'
+              : 'Tier upgrades based on successful referrals'}
           </li>
         </ul>
       </div>
