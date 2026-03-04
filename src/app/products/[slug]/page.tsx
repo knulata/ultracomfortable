@@ -13,6 +13,7 @@ import { CompleteTheLook, getSuggestedOutfit } from '@/components/engagement/Com
 import { ProductReviews } from '@/components/reviews'
 import { RecentlyViewedSection } from '@/components/recently-viewed'
 import { ProductRecommendations } from '@/components/recommendations'
+import { FrequentlyBoughtTogether } from '@/components/frequently-bought'
 import { SizeGuideModal } from '@/components/size-guide'
 import { useSizeGuideStore } from '@/stores/sizeGuide'
 import { toast } from 'sonner'
@@ -459,14 +460,18 @@ export default function ProductDetailPage() {
           />
         </section>
 
+        {/* Frequently Bought Together Bundle */}
         <section className="mt-8">
-          <ProductRecommendations
+          <FrequentlyBoughtTogether
             productId={mockProduct.id}
-            type="also_bought"
-            title="Frequently Bought Together"
-            titleId="Sering Dibeli Bersama"
-            maxItems={4}
-            variant="grid"
+            currentProduct={{
+              id: mockProduct.id,
+              name: mockProduct.name,
+              nameId: 'Kaos Oversized Premium',
+              price: mockProduct.sale_price ?? mockProduct.base_price,
+              originalPrice: mockProduct.sale_price ? mockProduct.base_price : undefined,
+              slug: mockProduct.slug,
+            }}
           />
         </section>
 
