@@ -1,17 +1,48 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Heart, ShoppingBag, Trash2 } from 'lucide-react'
+import { Heart, ShoppingBag, Trash2, TrendingDown, Filter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { formatPrice, useCartStore } from '@/stores/cart'
 import { useWishlistStore } from '@/stores/wishlist'
 import { useTranslation } from '@/stores/language'
+import { PriceDropBadge, PriceAlertToggle } from '@/components/price-alerts'
 import { toast } from 'sonner'
+
+type SortOption = 'recent' | 'price_drop' | 'price_low' | 'price_high'
 
 export default function WishlistPage() {
   const { t, language } = useTranslation()
-  const { items, removeItem } = useWishlistStore()
+  const { items, removeItem, getPriceDropInfo, getPriceDropCount } = useWishlistStore()
+  const [mounted, setMounted] = useState(false)
+  const [sortBy, setSortBy] = useState<SortOption>('recent')
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const priceDropCount = mounted ? getPriceDropCount() : 0
+
+  // Sort items based on selected option
+  const sortedItems = mounted ? [...items].sort((a, b) => {
+    switch (sortBy) {
+      case 'price_drop':
+        const aDropInfo = getPriceDropInfo(a.id)
+        const bDropInfo = getPriceDropInfo(b.id)
+        const aDrop = aDropInfo?.hasPriceDrop ? aDropInfo.savingsPercent : 0
+        const bDrop = bDropInfo?.hasPriceDrop ? bDropInfo.savingsPercent : 0
+        return bDrop - aDrop
+      case 'price_low':
+        return a.price - b.price
+      case 'price_high':
+        return b.price - a.price
+      case 'recent':
+      default:
+        return new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()
+    }
+  }) : items
   const { addItem: addToCart, openCart } = useCartStore()
 
   const handleRemove = (id: string) => {
@@ -104,18 +135,69 @@ export default function WishlistPage() {
 
   return (
     <div className="space-y-6">
+      {/* Price Drop Alert Banner */}
+      {mounted && priceDropCount > 0 && (
+        <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-green-100 dark:bg-green-900/50 rounded-full">
+              <TrendingDown className="h-5 w-5 text-green-600 dark:text-green-400" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-green-800 dark:text-green-200">
+                {language === 'id'
+                  ? `${priceDropCount} item favorit Anda turun harga!`
+                  : `${priceDropCount} of your wishlist items dropped in price!`
+                }
+              </p>
+              <p className="text-sm text-green-600 dark:text-green-400">
+                {language === 'id'
+                  ? 'Beli sekarang sebelum harga naik lagi'
+                  : 'Buy now before prices go back up'
+                }
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSortBy('price_drop')}
+              className="border-green-300 text-green-700 hover:bg-green-100 dark:border-green-700 dark:text-green-300"
+            >
+              {language === 'id' ? 'Lihat' : 'View'}
+            </Button>
+          </div>
+        </div>
+      )}
+
       <div className="bg-background rounded-xl p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-2xl font-bold">{t.account.wishlist}</h1>
             <p className="text-muted-foreground">{items.length} {t.account.items}</p>
           </div>
-          {items.length > 0 && (
-            <Button variant="outline" onClick={handleAddAllToCart}>
-              <ShoppingBag className="h-4 w-4 mr-2" />
-              {language === 'id' ? 'Tambah Semua ke Keranjang' : 'Add All to Cart'}
-            </Button>
-          )}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Sort dropdown */}
+            {items.length > 1 && (
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-muted-foreground" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  className="text-sm border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="recent">{language === 'id' ? 'Terbaru' : 'Recently Added'}</option>
+                  <option value="price_drop">{language === 'id' ? 'Harga Turun' : 'Price Drops'}</option>
+                  <option value="price_low">{language === 'id' ? 'Harga Terendah' : 'Price: Low to High'}</option>
+                  <option value="price_high">{language === 'id' ? 'Harga Tertinggi' : 'Price: High to Low'}</option>
+                </select>
+              </div>
+            )}
+            {items.length > 0 && (
+              <Button variant="outline" onClick={handleAddAllToCart}>
+                <ShoppingBag className="h-4 w-4 mr-2" />
+                {language === 'id' ? 'Tambah Semua' : 'Add All'}
+              </Button>
+            )}
+          </div>
         </div>
 
         {items.length === 0 ? (
@@ -135,11 +217,12 @@ export default function WishlistPage() {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {items.map((item) => {
+            {sortedItems.map((item) => {
               const hasDiscount = item.originalPrice && item.originalPrice > item.price
               const discountPercent = hasDiscount
                 ? Math.round((1 - item.price / item.originalPrice!) * 100)
                 : 0
+              const priceDropInfo = mounted ? getPriceDropInfo(item.id) : null
 
               return (
                 <div key={item.id} className="group relative">
@@ -156,11 +239,16 @@ export default function WishlistPage() {
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/20" />
                       )}
 
-                      {hasDiscount && (
+                      {/* Price Drop Badge */}
+                      {priceDropInfo?.hasPriceDrop ? (
+                        <div className="absolute top-2 left-2">
+                          <PriceDropBadge priceDropInfo={priceDropInfo} variant="badge" />
+                        </div>
+                      ) : hasDiscount ? (
                         <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
                           -{discountPercent}%
                         </span>
-                      )}
+                      ) : null}
                     </div>
                   </Link>
 
@@ -174,18 +262,32 @@ export default function WishlistPage() {
                   </button>
 
                   <div className="space-y-2">
-                    <Link href={`/products/${item.slug}`}>
-                      <h3 className="font-medium hover:text-primary transition-colors">{item.name}</h3>
-                    </Link>
+                    <div className="flex items-center justify-between">
+                      <Link href={`/products/${item.slug}`}>
+                        <h3 className="font-medium hover:text-primary transition-colors">{item.name}</h3>
+                      </Link>
+                      <PriceAlertToggle itemId={item.id} />
+                    </div>
 
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">
-                        {formatPrice(item.price)}
-                      </span>
-                      {hasDiscount && (
-                        <span className="text-sm text-muted-foreground line-through">
-                          {formatPrice(item.originalPrice!)}
+                    {/* Price with drop info */}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className={`font-semibold ${priceDropInfo?.hasPriceDrop ? 'text-green-600' : ''}`}>
+                          {formatPrice(item.price)}
                         </span>
+                        {priceDropInfo?.hasPriceDrop && (
+                          <span className="text-sm text-muted-foreground line-through">
+                            {formatPrice(priceDropInfo.priceWhenAdded)}
+                          </span>
+                        )}
+                        {!priceDropInfo?.hasPriceDrop && hasDiscount && (
+                          <span className="text-sm text-muted-foreground line-through">
+                            {formatPrice(item.originalPrice!)}
+                          </span>
+                        )}
+                      </div>
+                      {priceDropInfo?.hasPriceDrop && (
+                        <PriceDropBadge priceDropInfo={priceDropInfo} variant="inline" />
                       )}
                     </div>
 
