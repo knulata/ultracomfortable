@@ -9,6 +9,7 @@ import { formatPrice, useCartStore } from '@/stores/cart'
 import { useWishlistStore } from '@/stores/wishlist'
 import { CheckInButton } from '@/components/check-in'
 import { FlashSaleSection } from '@/components/flash-sale'
+import { DailyDealsSection } from '@/components/daily-deals'
 import { RecentlyViewedSection } from '@/components/recently-viewed'
 import { toast } from 'sonner'
 
@@ -153,6 +154,9 @@ export default function HomePage() {
 
       {/* Flash Sale Section */}
       <FlashSaleSection maxProducts={6} />
+
+      {/* Daily Deals Section */}
+      <DailyDealsSection />
 
       {/* Trending Now */}
       <section className="py-16">
