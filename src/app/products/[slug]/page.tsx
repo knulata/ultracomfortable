@@ -15,6 +15,7 @@ import { RecentlyViewedSection } from '@/components/recently-viewed'
 import { ProductRecommendations } from '@/components/recommendations'
 import { FrequentlyBoughtTogether } from '@/components/frequently-bought'
 import { BackInStockAlert } from '@/components/stock-alerts'
+import { ProductQA } from '@/components/product-qa'
 import { SizeGuideModal } from '@/components/size-guide'
 import { useSizeGuideStore } from '@/stores/sizeGuide'
 import { toast } from 'sonner'
@@ -490,6 +491,14 @@ export default function ProductDetailPage() {
               originalPrice: mockProduct.sale_price ? mockProduct.base_price : undefined,
               slug: mockProduct.slug,
             }}
+          />
+        </section>
+
+        {/* Product Q&A */}
+        <section className="mt-16">
+          <ProductQA
+            productId={mockProduct.id}
+            productName={mockProduct.name}
           />
         </section>
 
