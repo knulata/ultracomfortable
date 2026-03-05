@@ -119,6 +119,7 @@ export default function LookbookDetailPage() {
       id: product.id,
       brand_id: 'uc',
       category_id: product.category.toLowerCase(),
+      seller_id: null,
       name: language === 'id' ? product.nameId : product.name,
       slug: product.slug,
       description: '',

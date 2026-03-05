@@ -18,7 +18,7 @@ export interface Database {
           avatar_url: string | null
           points: number
           membership_tier: 'bronze' | 'silver' | 'gold' | 'platinum'
-          role: 'customer' | 'admin'
+          role: 'customer' | 'admin' | 'seller'
           referral_code: string | null
           referred_by: string | null
           created_at: string
@@ -128,6 +128,7 @@ export interface Database {
           id: string
           brand_id: string
           category_id: string
+          seller_id: string | null
           name: string
           slug: string
           description: string | null
@@ -147,6 +148,7 @@ export interface Database {
           id?: string
           brand_id: string
           category_id: string
+          seller_id?: string | null
           name: string
           slug: string
           description?: string | null
@@ -166,6 +168,7 @@ export interface Database {
           id?: string
           brand_id?: string
           category_id?: string
+          seller_id?: string | null
           name?: string
           slug?: string
           description?: string | null
@@ -797,6 +800,183 @@ export interface Database {
           sort_order?: number
         }
       }
+      sellers: {
+        Row: {
+          id: string
+          user_id: string
+          store_name: string
+          store_slug: string
+          description: string | null
+          logo_url: string | null
+          banner_url: string | null
+          phone: string
+          whatsapp: string
+          email: string | null
+          address: string
+          city: string
+          market_location: string | null
+          bank_name: string | null
+          bank_account_number: string | null
+          bank_account_name: string | null
+          commission_rate: number
+          status: 'pending' | 'active' | 'suspended' | 'closed'
+          is_verified: boolean
+          total_products: number
+          total_orders: number
+          total_revenue: number
+          rating_avg: number
+          rating_count: number
+          joined_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          store_name: string
+          store_slug: string
+          description?: string | null
+          logo_url?: string | null
+          banner_url?: string | null
+          phone: string
+          whatsapp: string
+          email?: string | null
+          address: string
+          city?: string
+          market_location?: string | null
+          bank_name?: string | null
+          bank_account_number?: string | null
+          bank_account_name?: string | null
+          commission_rate?: number
+          status?: 'pending' | 'active' | 'suspended' | 'closed'
+          is_verified?: boolean
+          total_products?: number
+          total_orders?: number
+          total_revenue?: number
+          rating_avg?: number
+          rating_count?: number
+          joined_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          store_name?: string
+          store_slug?: string
+          description?: string | null
+          logo_url?: string | null
+          banner_url?: string | null
+          phone?: string
+          whatsapp?: string
+          email?: string | null
+          address?: string
+          city?: string
+          market_location?: string | null
+          bank_name?: string | null
+          bank_account_number?: string | null
+          bank_account_name?: string | null
+          commission_rate?: number
+          status?: 'pending' | 'active' | 'suspended' | 'closed'
+          is_verified?: boolean
+          total_products?: number
+          total_orders?: number
+          total_revenue?: number
+          rating_avg?: number
+          rating_count?: number
+          joined_at?: string
+          updated_at?: string
+        }
+      }
+      settlements: {
+        Row: {
+          id: string
+          seller_id: string
+          amount: number
+          commission: number
+          gross_amount: number
+          order_count: number
+          period_start: string
+          period_end: string
+          bank_name: string | null
+          bank_account_number: string | null
+          bank_account_name: string | null
+          status: 'pending' | 'processing' | 'completed' | 'failed'
+          paid_at: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          seller_id: string
+          amount: number
+          commission: number
+          gross_amount: number
+          order_count?: number
+          period_start: string
+          period_end: string
+          bank_name?: string | null
+          bank_account_number?: string | null
+          bank_account_name?: string | null
+          status?: 'pending' | 'processing' | 'completed' | 'failed'
+          paid_at?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          seller_id?: string
+          amount?: number
+          commission?: number
+          gross_amount?: number
+          order_count?: number
+          period_start?: string
+          period_end?: string
+          bank_name?: string | null
+          bank_account_number?: string | null
+          bank_account_name?: string | null
+          status?: 'pending' | 'processing' | 'completed' | 'failed'
+          paid_at?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+      }
+      seller_notifications: {
+        Row: {
+          id: string
+          seller_id: string
+          channel: 'whatsapp' | 'email' | 'push'
+          type: string
+          title: string
+          message: string
+          metadata: Json
+          status: 'pending' | 'sent' | 'failed'
+          sent_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          seller_id: string
+          channel?: 'whatsapp' | 'email' | 'push'
+          type: string
+          title: string
+          message: string
+          metadata?: Json
+          status?: 'pending' | 'sent' | 'failed'
+          sent_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          seller_id?: string
+          channel?: 'whatsapp' | 'email' | 'push'
+          type?: string
+          title?: string
+          message?: string
+          metadata?: Json
+          status?: 'pending' | 'sent' | 'failed'
+          sent_at?: string | null
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -811,6 +991,9 @@ export interface Database {
       reseller_status: 'pending' | 'approved' | 'rejected' | 'suspended'
       reseller_order_status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled'
       qa_author_type: 'customer' | 'seller' | 'verified_buyer'
+      seller_status: 'pending' | 'active' | 'suspended' | 'closed'
+      settlement_status: 'pending' | 'processing' | 'completed' | 'failed'
+      notification_channel: 'whatsapp' | 'email' | 'push'
     }
   }
 }
@@ -838,6 +1021,9 @@ export type DealPurchase = Database['public']['Tables']['deal_purchases']['Row']
 export type PriceHistory = Database['public']['Tables']['price_history']['Row']
 export type ProductBundle = Database['public']['Tables']['product_bundles']['Row']
 export type BundleProduct = Database['public']['Tables']['bundle_products']['Row']
+export type Seller = Database['public']['Tables']['sellers']['Row']
+export type Settlement = Database['public']['Tables']['settlements']['Row']
+export type SellerNotification = Database['public']['Tables']['seller_notifications']['Row']
 
 // Extended types with relations
 export type ProductWithVariants = Product & {

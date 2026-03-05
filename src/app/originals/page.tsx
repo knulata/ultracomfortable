@@ -223,6 +223,7 @@ export default function UCOriginalsPage() {
       id: product.id,
       brand_id: 'uc-originals',
       category_id: 'originals',
+      seller_id: null,
       name: language === 'id' ? product.nameId : product.name,
       slug: product.slug,
       description: language === 'id' ? product.descriptionId : product.description,

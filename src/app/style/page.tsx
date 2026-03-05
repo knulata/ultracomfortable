@@ -166,6 +166,7 @@ export default function StylePage() {
       id: product.id,
       brand_id: 'uc',
       category_id: 'style',
+      seller_id: null,
       name: language === 'id' ? product.nameId : product.name,
       slug: product.slug,
       description: '',

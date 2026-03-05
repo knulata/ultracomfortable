@@ -9,8 +9,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Admin route protection
-  if (request.nextUrl.pathname.startsWith('/admin')) {
+  // Protected route checks (admin & seller)
+  const isAdmin = request.nextUrl.pathname.startsWith('/admin')
+  const isSeller = request.nextUrl.pathname.startsWith('/seller')
+
+  if (isAdmin || isSeller) {
     let supabaseResponse = NextResponse.next({ request })
 
     const supabase = createServerClient(
@@ -40,13 +43,13 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl)
     }
 
-    // Check admin role in profile
     const { data: profile } = await (supabase.from('profiles') as any)
       .select('role')
       .eq('id', user.id)
       .single()
 
-    if (profile?.role !== 'admin') {
+    const requiredRole = isAdmin ? 'admin' : 'seller'
+    if (profile?.role !== requiredRole) {
       return NextResponse.redirect(new URL('/', request.url))
     }
 

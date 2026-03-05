@@ -159,6 +159,7 @@ export default function ProductDetailPage() {
         id: mockProduct.id,
         brand_id: 'uc',
         category_id: 'tops',
+        seller_id: null,
         name: mockProduct.name,
         slug: mockProduct.slug,
         description: mockProduct.description,

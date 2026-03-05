@@ -6,6 +6,7 @@ const mockProduct: Product = {
   id: 'prod-1',
   brand_id: 'brand-1',
   category_id: 'cat-1',
+  seller_id: null,
   name: 'Test Product',
   slug: 'test-product',
   description: 'A test product',

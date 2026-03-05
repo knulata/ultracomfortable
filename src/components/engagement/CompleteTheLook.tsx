@@ -60,6 +60,7 @@ export function CompleteTheLook({ currentProduct, suggestedItems }: CompleteTheL
         id: item.id,
         brand_id: 'uc',
         category_id: item.category.toLowerCase(),
+        seller_id: null,
         name: language === 'id' ? item.nameId : item.name,
         slug: item.slug,
         description: '',
