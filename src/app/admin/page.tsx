@@ -14,6 +14,7 @@ import {
   Tag,
 } from 'lucide-react'
 import { formatPrice } from '@/stores/cart'
+import { getAdminStats, getRecentOrders } from './actions'
 
 interface DashboardStats {
   totalOrders: number
@@ -24,8 +25,8 @@ interface DashboardStats {
   pendingResellers: number
 }
 
-// Mock stats for dashboard
-const mockStats: DashboardStats = {
+// Fallback stats when DB is not connected
+const fallbackStats: DashboardStats = {
   totalOrders: 1284,
   pendingOrders: 23,
   totalRevenue: 892400000,
@@ -52,7 +53,17 @@ const statusColors: Record<string, string> = {
 }
 
 export default function AdminDashboard() {
-  const [stats] = useState<DashboardStats>(mockStats)
+  const [stats, setStats] = useState<DashboardStats>(fallbackStats)
+  const [orders, setOrders] = useState(recentOrders)
+
+  useEffect(() => {
+    getAdminStats()
+      .then(setStats)
+      .catch(() => setStats(fallbackStats))
+    getRecentOrders(5)
+      .then((data) => { if (data.length > 0) setOrders(data) })
+      .catch(() => {})
+  }, [])
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">

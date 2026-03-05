@@ -18,6 +18,7 @@ export interface Database {
           avatar_url: string | null
           points: number
           membership_tier: 'bronze' | 'silver' | 'gold' | 'platinum'
+          role: 'customer' | 'admin'
           referral_code: string | null
           referred_by: string | null
           created_at: string
@@ -31,6 +32,7 @@ export interface Database {
           avatar_url?: string | null
           points?: number
           membership_tier?: 'bronze' | 'silver' | 'gold' | 'platinum'
+          role?: 'customer' | 'admin'
           referral_code?: string | null
           referred_by?: string | null
           created_at?: string
@@ -44,6 +46,7 @@ export interface Database {
           avatar_url?: string | null
           points?: number
           membership_tier?: 'bronze' | 'silver' | 'gold' | 'platinum'
+          role?: 'customer' | 'admin'
           referral_code?: string | null
           referred_by?: string | null
           created_at?: string

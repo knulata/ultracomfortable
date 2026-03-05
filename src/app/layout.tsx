@@ -21,9 +21,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UC | Ultra Comfortable - Fashion for Everyone",
+  title: {
+    default: "UC | Ultra Comfortable - Fashion for Everyone",
+    template: "%s | UC",
+  },
   description: "Discover affordable, trendy fashion at UC. Shop the latest styles in women's, men's, and kids' clothing. Free shipping on orders over Rp 500.000.",
-  keywords: ["fashion", "clothing", "UC", "Ultra Comfortable", "Indonesia", "affordable fashion"],
+  keywords: ["fashion", "clothing", "UC", "Ultra Comfortable", "Indonesia", "affordable fashion", "Tanah Abang"],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://ultracomfortable.com'),
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    siteName: 'UC - Ultra Comfortable',
+    title: 'UC | Ultra Comfortable - Fashion for Everyone',
+    description: 'Discover affordable, trendy fashion at UC. Comfort meets style.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'UC | Ultra Comfortable',
+    description: 'Comfort meets style. Shop trendy fashion in Indonesia.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
