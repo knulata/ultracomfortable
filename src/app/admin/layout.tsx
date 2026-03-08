@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Bell,
+  Sparkles,
 } from 'lucide-react'
 import { useTranslation } from '@/stores/language'
 
@@ -34,6 +35,11 @@ export default function AdminLayout({
       href: '/admin/partners',
       label: language === 'id' ? 'Partner' : 'Partners',
       icon: Users,
+    },
+    {
+      href: '/admin/trials',
+      label: language === 'id' ? 'Uji Coba' : 'Trials',
+      icon: Sparkles,
     },
     {
       href: '/admin/orders',
