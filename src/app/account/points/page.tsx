@@ -45,7 +45,7 @@ export default function PointsPage() {
       <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-background rounded-xl p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <p className="text-sm text-muted-foreground mb-1">Your UC Points</p>
+            <p className="text-sm text-muted-foreground mb-1">Your Alya Points</p>
             <div className="flex items-baseline gap-2">
               <span className="text-4xl font-bold">{mockUser.points.toLocaleString()}</span>
               <span className="text-muted-foreground">pts</span>

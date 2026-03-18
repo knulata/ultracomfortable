@@ -1,6 +1,6 @@
-# UC Shop CLI & API
+# AlyaNoor Shop CLI & API
 
-A command-line interface and REST API for AI agents to browse and purchase clothing from Ultra Comfortable.
+A command-line interface and REST API for AI agents to browse and purchase clothing from AlyaNoor.
 
 ## Quick Start
 
@@ -12,26 +12,26 @@ brew install jq  # macOS
 apt install jq   # Ubuntu
 
 # Set environment (optional - defaults to localhost:3000)
-export UC_API_URL="http://localhost:3000/api"
-export UC_SESSION_ID="my-agent-session-123"
+export ALYA_API_URL="http://localhost:3000/api"
+export ALYA_SESSION_ID="my-agent-session-123"
 
 # Browse products
-./cli/uc-shop products
+./cli/alya-shop products
 
 # Search for dresses
-./cli/uc-shop search dress
+./cli/alya-shop search dress
 
 # View product details
-./cli/uc-shop product floral-wrap-dress
+./cli/alya-shop product floral-wrap-dress
 
 # Add to cart
-./cli/uc-shop add floral-wrap-dress --size M --color "Blue Floral"
+./cli/alya-shop add floral-wrap-dress --size M --color "Blue Floral"
 
 # View cart
-./cli/uc-shop cart
+./cli/alya-shop cart
 
 # Checkout
-./cli/uc-shop checkout \
+./cli/alya-shop checkout \
   --name "John Doe" \
   --phone "08123456789" \
   --address "Jl. Contoh No. 123" \
@@ -214,7 +214,7 @@ Headers: X-Session-ID: your-session-id
 
 #### Get Order Details
 ```
-GET /api/orders?id=UC-ABC123
+GET /api/orders?id=AN-ABC123
 ```
 
 ## Product Categories

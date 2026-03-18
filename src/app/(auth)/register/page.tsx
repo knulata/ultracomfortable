@@ -83,7 +83,7 @@ function RegisterContent() {
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold">Create Account</h1>
         <p className="text-muted-foreground mt-2">
-          Join UC and get 100 welcome points!
+          Join AlyaNoor and get 100 welcome points!
         </p>
       </div>
 

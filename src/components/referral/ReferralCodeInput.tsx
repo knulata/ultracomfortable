@@ -30,7 +30,7 @@ export function ReferralCodeInput({ value, onChange, onValidated }: ReferralCode
     await new Promise((resolve) => setTimeout(resolve, 800))
 
     // For demo, accept codes starting with "UC"
-    const isValid = code.toUpperCase().startsWith('UC') && code.length >= 8
+    const isValid = code.toUpperCase().startsWith('AN') && code.length >= 8
 
     setValidationResult(isValid ? 'valid' : 'invalid')
     setIsValidating(false)

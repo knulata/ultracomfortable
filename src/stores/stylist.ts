@@ -111,7 +111,7 @@ export const useStylistStore = create<StylistState>()(
       completeQuiz: () => set({ hasCompletedQuiz: true }),
     }),
     {
-      name: 'uc-stylist',
+      name: 'alyanoor-stylist',
       partialize: (state) => ({
         preferences: state.preferences,
         hasCompletedQuiz: state.hasCompletedQuiz,

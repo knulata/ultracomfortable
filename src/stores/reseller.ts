@@ -388,7 +388,7 @@ export const useResellerStore = create<ResellerState>()(
       },
     }),
     {
-      name: 'uc-reseller',
+      name: 'alyanoor-reseller',
     }
   )
 )

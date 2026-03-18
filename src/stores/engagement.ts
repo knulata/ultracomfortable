@@ -102,7 +102,7 @@ export const useEngagementStore = create<EngagementState>()(
       },
     }),
     {
-      name: 'uc-engagement',
+      name: 'alyanoor-engagement',
     }
   )
 )

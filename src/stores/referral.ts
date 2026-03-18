@@ -91,7 +91,7 @@ interface ReferralState {
 
 // Generate a unique referral code from user ID
 const generateCode = (userId: string): string => {
-  const prefix = 'UC'
+  const prefix = 'AN'
   const hash = userId.slice(-4).toUpperCase()
   const random = Math.random().toString(36).substring(2, 6).toUpperCase()
   return `${prefix}${hash}${random}`
@@ -276,7 +276,7 @@ export const useReferralStore = create<ReferralState>()(
       },
     }),
     {
-      name: 'uc-referral-storage',
+      name: 'alyanoor-referral-storage',
     }
   )
 )

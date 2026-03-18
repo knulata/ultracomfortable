@@ -25,7 +25,7 @@ export function UCOriginalBadge({ variant = 'default', className = '' }: UCOrigi
   return (
     <span className={`inline-flex items-center gap-1 font-medium rounded-full ${variants[variant]} ${className}`}>
       <Sparkles className={iconSizes[variant]} />
-      UC Original
+      Alya Original
     </span>
   )
 }

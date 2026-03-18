@@ -427,7 +427,7 @@ export default function HomePage() {
               </div>
               <p className="text-muted-foreground mb-4">
                 "{language === 'id'
-                  ? 'Omset online saya naik 3x lipat sejak gabung UC. Sekarang fokus produksi, UC yang jual.'
+                  ? 'Omset online saya naik 3x lipat sejak gabung AlyaNoor. Sekarang fokus produksi, UC yang jual.'
                   : 'My online revenue tripled since joining UC. Now I focus on production, UC handles sales.'}"
               </p>
               <div className="flex items-center gap-3">

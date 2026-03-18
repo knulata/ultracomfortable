@@ -39,7 +39,7 @@ async function getSessionId(request: NextRequest): Promise<string> {
 
   // Fallback to cookie
   const cookieStore = await cookies()
-  let sessionId = cookieStore.get('uc-session')?.value
+  let sessionId = cookieStore.get('alyanoor-session')?.value
 
   if (!sessionId) {
     sessionId = `session-${Date.now()}-${Math.random().toString(36).substring(7)}`
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Set session cookie
-    response.cookies.set('uc-session', sessionId, {
+    response.cookies.set('alyanoor-session', sessionId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

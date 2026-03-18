@@ -32,7 +32,7 @@ export const useLanguageStore = create<LanguageState>()(
       },
     }),
     {
-      name: 'uc-lang-v2',
+      name: 'alyanoor-lang-v2',
       partialize: (state) => ({ language: state.language }),
       onRehydrateStorage: () => (state) => {
         if (state) {

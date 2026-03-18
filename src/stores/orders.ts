@@ -601,7 +601,7 @@ export const useOrdersStore = create<OrdersState>()(
       },
     }),
     {
-      name: 'uc-orders',
+      name: 'alyanoor-orders',
       partialize: () => ({}), // Don't persist, use mock data
     }
   )

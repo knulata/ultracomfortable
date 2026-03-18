@@ -9,7 +9,7 @@ import { formatPrice, useCartStore } from '@/stores/cart'
 import { useWishlistStore } from '@/stores/wishlist'
 import { toast } from 'sonner'
 
-// UC Originals Collection - Exclusive designs only at UC
+// Alya Originals Collection - Exclusive designs only at UC
 const ucOriginals = {
   // Hero Collection - "Comfort Edit"
   comfortEdit: {
@@ -272,10 +272,10 @@ export default function UCOriginalsPage() {
           {/* Gradient placeholder */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/20" />
 
-          {/* UC Original Badge */}
+          {/* Alya Original Badge */}
           <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-black text-white px-2.5 py-1 rounded-full text-xs font-medium">
             <Sparkles className="h-3 w-3" />
-            UC Original
+            Alya Original
           </div>
 
           {/* Status Badge */}
@@ -384,7 +384,7 @@ export default function UCOriginalsPage() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              UC Originals
+              Alya Originals
             </h1>
 
             <p className="text-xl text-white/80 mb-8 max-w-xl">
@@ -449,12 +449,12 @@ export default function UCOriginalsPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-              {language === 'id' ? 'Mengapa UC Originals?' : 'Why UC Originals?'}
+              {language === 'id' ? 'Mengapa Alya Originals?' : 'Why Alya Originals?'}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
               {language === 'id'
-                ? 'Kami lelah melihat fashion yang sama di mana-mana. Jadi kami memutuskan untuk membuat sendiri. Setiap UC Original dirancang oleh tim kami di Jakarta, diuji pada berbagai tipe tubuh Indonesia, dan dibuat dengan material yang benar-benar nyaman. Ini bukan fast fashion. Ini fashion yang dibuat dengan penuh perhatian.'
-                : "We got tired of seeing the same fashion everywhere. So we decided to make our own. Every UC Original is designed by our team in Jakarta, tested on real Indonesian body types, and made with materials that actually feel good. This isn't fast fashion. This is fashion made with care."}
+                ? 'Kami lelah melihat fashion yang sama di mana-mana. Jadi kami memutuskan untuk membuat sendiri. Setiap Alya Original dirancang oleh tim kami di Jakarta, diuji pada berbagai tipe tubuh Indonesia, dan dibuat dengan material yang benar-benar nyaman. Ini bukan fast fashion. Ini fashion yang dibuat dengan penuh perhatian.'
+                : "We got tired of seeing the same fashion everywhere. So we decided to make our own. Every Alya Original is designed by our team in Jakarta, tested on real Indonesian body types, and made with materials that actually feel good. This isn't fast fashion. This is fashion made with care."}
             </p>
             <div className="flex items-center justify-center gap-8">
               <div className="text-center">
@@ -521,7 +521,7 @@ export default function UCOriginalsPage() {
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="flex items-center gap-1.5 bg-white text-black px-2.5 py-1 rounded-full text-xs font-medium">
                       <Sparkles className="h-3 w-3" />
-                      UC Original
+                      Alya Original
                     </span>
                     <span className="bg-purple-500 text-white px-2.5 py-1 rounded-full text-xs font-semibold">
                       Limited

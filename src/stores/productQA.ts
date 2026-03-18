@@ -242,7 +242,7 @@ export const useProductQAStore = create<ProductQAState>()(
       },
     }),
     {
-      name: 'uc-product-qa',
+      name: 'alyanoor-product-qa',
       partialize: (state) => ({ helpfulVotes: state.helpfulVotes }),
     }
   )

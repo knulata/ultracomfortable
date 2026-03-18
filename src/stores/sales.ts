@@ -277,7 +277,7 @@ export const useSalesStore = create<SalesState>()(
       },
     }),
     {
-      name: 'uc-sales',
+      name: 'alyanoor-sales',
       partialize: (state) => ({ dailyTarget: state.dailyTarget }),
     }
   )

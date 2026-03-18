@@ -42,7 +42,7 @@ export default function AuthLayout({
           </div>
 
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Ultra Comfortable. All rights reserved.
+            &copy; {new Date().getFullYear()} AlyaNoor. All rights reserved.
           </p>
         </div>
       </div>

@@ -191,7 +191,7 @@ export const useAddressesStore = create<AddressesState>()(
       },
     }),
     {
-      name: 'uc-addresses',
+      name: 'alyanoor-addresses',
       partialize: (state) => ({ addresses: state.addresses }),
     }
   )

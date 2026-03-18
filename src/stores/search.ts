@@ -440,7 +440,7 @@ export const useSearchStore = create<SearchState>()(
       },
     }),
     {
-      name: 'uc-search',
+      name: 'alyanoor-search',
       partialize: (state) => ({ recentSearches: state.recentSearches }),
     }
   )

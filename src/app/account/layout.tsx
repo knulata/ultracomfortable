@@ -9,7 +9,7 @@ const sidebarLinks = [
   { href: '/account/orders', label: 'My Orders', icon: Package },
   { href: '/account/wishlist', label: 'Wishlist', icon: Heart },
   { href: '/account/addresses', label: 'Addresses', icon: MapPin },
-  { href: '/account/points', label: 'UC Points', icon: Gift },
+  { href: '/account/points', label: 'Alya Points', icon: Gift },
   { href: '/account/coupons', label: 'Coupons', icon: Tag },
   { href: '/account/check-in', label: 'Daily Check-in', icon: Flame },
   { href: '/account/referrals', label: 'Referrals', icon: Users },

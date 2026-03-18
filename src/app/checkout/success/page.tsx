@@ -94,7 +94,7 @@ function SuccessContent() {
               </div>
               <div>
                 <p className="font-medium text-sm">
-                  {language === 'id' ? 'Anda mendapat 150 UC Points!' : 'You earned 150 UC Points!'}
+                  {language === 'id' ? 'Anda mendapat 150 Alya Points!' : 'You earned 150 Alya Points!'}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {language === 'id' ? 'Gunakan di pesanan berikutnya' : 'Use on your next order'}

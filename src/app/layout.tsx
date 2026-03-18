@@ -21,9 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UC | Ultra Comfortable - Fashion for Everyone",
-  description: "Discover affordable, trendy fashion at UC. Shop the latest styles in women's, men's, and kids' clothing. Free shipping on orders over Rp 500.000.",
-  keywords: ["fashion", "clothing", "UC", "Ultra Comfortable", "Indonesia", "affordable fashion"],
+  title: "AlyaNoor - Modest Fashion Indonesia",
+  description: "Discover elegant modest fashion at AlyaNoor. Premium quality hijab, abaya, and Muslim fashion from Tanah Abang. Free shipping on orders over Rp 500.000.",
+  keywords: ["modest fashion", "hijab", "Muslim fashion", "AlyaNoor", "Indonesia", "Tanah Abang", "abaya"],
 };
 
 export default function RootLayout({

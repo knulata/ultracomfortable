@@ -119,13 +119,13 @@ function WaitlistContent() {
   }
 
   const copyReferralLink = () => {
-    const link = `https://ultracomfortable.com/waitlist?ref=${referralCode}`
+    const link = `https://alyanoor.com/waitlist?ref=${referralCode}`
     navigator.clipboard.writeText(link)
     toast.success('Link copied!')
   }
 
   const shareToWhatsApp = () => {
-    const text = `Join UC waitlist and get Rp50K off! Use my code: ${referralCode}\nhttps://ultracomfortable.com/waitlist?ref=${referralCode}`
+    const text = `Join AlyaNoor waitlist and get Rp50K off! Use my code: ${referralCode}\nhttps://alyanoor.com/waitlist?ref=${referralCode}`
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
@@ -173,7 +173,7 @@ function WaitlistContent() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
             Fashion yang
             <br />
-            <span className="text-primary">Ultra Comfortable</span>
+            <span className="text-primary">AlyaNoor</span>
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
@@ -216,7 +216,7 @@ function WaitlistContent() {
                   <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
                     <span className="text-2xl">🎁</span>
                   </div>
-                  <h3 className="font-semibold mb-1">500 UC Points</h3>
+                  <h3 className="font-semibold mb-1">500 Alya Points</h3>
                   <p className="text-sm text-muted-foreground">Bonus poin gratis</p>
                 </div>
                 <div className="bg-gradient-to-br from-pink-500/10 to-pink-500/5 rounded-2xl p-4 text-center">
@@ -275,7 +275,7 @@ function WaitlistContent() {
 
               <h2 className="text-2xl font-bold mb-2">Kamu sudah terdaftar!</h2>
               <p className="text-muted-foreground mb-6">
-                Kami akan kirim email saat UC launching
+                Kami akan kirim email saat AlyaNoor launching
               </p>
 
               {/* Referral Section */}
@@ -287,7 +287,7 @@ function WaitlistContent() {
 
                 <div className="flex gap-2 mb-4">
                   <div className="flex-1 bg-background rounded-lg px-3 py-2 font-mono text-sm truncate border">
-                    ultracomfortable.com/waitlist?ref={referralCode}
+                    alyanoor.com/waitlist?ref={referralCode}
                   </div>
                   <Button variant="outline" size="icon" onClick={copyReferralLink}>
                     <Copy className="h-4 w-4" />
@@ -426,7 +426,7 @@ function WaitlistContent() {
             <a href="#" className="hover:text-primary transition-colors">Twitter</a>
           </div>
           <p className="mt-6">
-            © 2026 UC (Ultra Comfortable). All rights reserved.
+            © 2026 AlyaNoor. All rights reserved.
           </p>
         </div>
       </div>

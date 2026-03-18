@@ -382,7 +382,7 @@ function NotRegistered() {
           <Star className="h-8 w-8 text-primary" />
         </div>
         <h1 className="text-xl font-bold mb-2">
-          {language === 'id' ? 'Jadi Reseller UC' : 'Become a UC Reseller'}
+          {language === 'id' ? 'Jadi Reseller UC' : 'Become a AlyaNoor Reseller'}
         </h1>
         <p className="text-muted-foreground mb-6">
           {language === 'id'

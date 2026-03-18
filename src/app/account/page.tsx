@@ -116,7 +116,7 @@ export default function AccountDashboard() {
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
           </div>
           <p className="text-2xl font-bold mt-3">{mockUser.points.toLocaleString()}</p>
-          <p className="text-sm text-muted-foreground">UC Points</p>
+          <p className="text-sm text-muted-foreground">Alya Points</p>
         </Link>
       </div>
 

@@ -49,17 +49,17 @@
 
 :root {
   --radius: 0.5rem;
-  /* UC Theme - Light Mode */
+  /* AlyaNoor Theme - Light Mode */
   --background: oklch(1 0 0);
   --foreground: oklch(0.13 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.13 0 0);
-  /* UC Gold Accent: #c9a87c */
+  /* Alya Gold Accent: #c9a87c */
   --primary: oklch(0.74 0.08 75);
   --primary-foreground: oklch(0.13 0 0);
-  /* UC Black secondary */
+  /* Alya Black secondary */
   --secondary: oklch(0.13 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.96 0.01 75);
@@ -86,15 +86,15 @@
 }
 
 .dark {
-  /* UC Theme - Dark Mode (default for UC brand) */
-  /* UC Black: #0a0a0a */
+  /* AlyaNoor Theme - Dark Mode (default for UC brand) */
+  /* Alya Black: #0a0a0a */
   --background: oklch(0.13 0 0);
   --foreground: oklch(0.98 0 0);
   --card: oklch(0.16 0 0);
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.16 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  /* UC Gold Accent */
+  /* Alya Gold Accent */
   --primary: oklch(0.74 0.08 75);
   --primary-foreground: oklch(0.13 0 0);
   --secondary: oklch(0.22 0 0);

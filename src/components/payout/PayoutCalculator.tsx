@@ -274,7 +274,7 @@ export function PayoutCalculator() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-amber-700 dark:text-amber-400">
                 <Percent className="h-4 w-4 inline mr-1" />
-                {language === 'id' ? 'Komisi UC' : 'UC Commission'} ({partner?.commissionRate}%)
+                {language === 'id' ? 'Komisi UC' : 'AlyaNoor Commission'} ({partner?.commissionRate}%)
               </span>
               <span className="font-bold text-amber-700 dark:text-amber-400">
                 -{formatPrice(calculatedData.commission)}

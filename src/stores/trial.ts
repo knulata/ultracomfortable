@@ -387,7 +387,7 @@ export const useTrialStore = create<TrialState>()(
       },
     }),
     {
-      name: 'uc-trial',
+      name: 'alyanoor-trial',
     }
   )
 )

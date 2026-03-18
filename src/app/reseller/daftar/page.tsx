@@ -154,7 +154,7 @@ export default function ResellerRegisterPage() {
               {language === 'id' ? 'Daftar Reseller' : 'Reseller Registration'}
             </h1>
             <p className="text-xs text-muted-foreground">
-              {language === 'id' ? 'Bergabung dengan jaringan reseller UC' : 'Join the UC reseller network'}
+              {language === 'id' ? 'Bergabung dengan jaringan reseller UC' : 'Join the AlyaNoor reseller network'}
             </p>
           </div>
         </div>
@@ -453,7 +453,7 @@ export default function ResellerRegisterPage() {
               <span className="text-sm">
                 {language === 'id'
                   ? 'Saya menyetujui syarat dan ketentuan program reseller UC'
-                  : 'I agree to the UC reseller program terms and conditions'}
+                  : 'I agree to the AlyaNoor reseller program terms and conditions'}
               </span>
             </label>
 

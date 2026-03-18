@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
     const total = subtotal + shipping
 
     // Create order
-    const orderId = `UC-${Date.now().toString(36).toUpperCase()}`
+    const orderId = `AN-${Date.now().toString(36).toUpperCase()}`
     const order: Order = {
       id: orderId,
       sessionId,

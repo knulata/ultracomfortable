@@ -41,7 +41,7 @@ Key Features:
     '/images/product-3.jpg',
     '/images/product-4.jpg',
   ],
-  brand: { name: 'UC', slug: 'uc' },
+  brand: { name: 'UC', slug: 'alyanoor' },
   category: { name: 'Tops', slug: 'tops' },
   rating_avg: 4.7,
   rating_count: 328,

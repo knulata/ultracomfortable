@@ -75,7 +75,7 @@ export const useRecentlyViewedStore = create<RecentlyViewedState>()(
       },
     }),
     {
-      name: 'uc-recently-viewed',
+      name: 'alyanoor-recently-viewed',
       partialize: (state) => ({ products: state.products }),
     }
   )

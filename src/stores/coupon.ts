@@ -72,8 +72,8 @@ const mockCoupons: Coupon[] = [
     code: 'UCFAM20',
     type: 'percentage',
     value: 20,
-    description: '20% off - UC Family exclusive',
-    descriptionId: 'Diskon 20% - Eksklusif UC Family',
+    description: '20% off - Alya Family exclusive',
+    descriptionId: 'Diskon 20% - Eksklusif Alya Family',
     minOrderValue: 300000,
     maxDiscount: 100000,
     validFrom: new Date('2026-01-01'),
@@ -328,7 +328,7 @@ export const useCouponStore = create<CouponState>()(
       },
     }),
     {
-      name: 'uc-coupon-storage',
+      name: 'alyanoor-coupon-storage',
     }
   )
 )

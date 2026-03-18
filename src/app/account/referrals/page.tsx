@@ -66,7 +66,7 @@ export default function ReferralsPage() {
 
     const urls = {
       whatsapp: `https://wa.me/?text=${encodeURIComponent(message)}`,
-      email: `mailto:?subject=${encodeURIComponent('Join UC!')}&body=${encodeURIComponent(message)}`,
+      email: `mailto:?subject=${encodeURIComponent('Join AlyaNoor!')}&body=${encodeURIComponent(message)}`,
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`,
     }
 
@@ -286,8 +286,8 @@ export default function ReferralsPage() {
               step: 4,
               title: language === 'id' ? 'Kamu Dapat Hadiah!' : 'You Get Rewarded!',
               desc: language === 'id'
-                ? `Dapat ${REFERRAL_CONFIG.referrerPoints} UC Points per referral`
-                : `Earn ${REFERRAL_CONFIG.referrerPoints} UC Points per referral`,
+                ? `Dapat ${REFERRAL_CONFIG.referrerPoints} Alya Points per referral`
+                : `Earn ${REFERRAL_CONFIG.referrerPoints} Alya Points per referral`,
             },
           ].map((item, index, arr) => (
             <div key={item.step} className="flex items-start gap-4">

@@ -3,7 +3,7 @@ export const translations = {
     // Navigation
     nav: {
       newIn: 'New In',
-      originals: 'UC Originals',
+      originals: 'Alya Originals',
       style: 'Style',
       women: 'Women',
       men: 'Men',
@@ -157,7 +157,7 @@ export const translations = {
       myOrders: 'My Orders',
       wishlist: 'Wishlist',
       addresses: 'Addresses',
-      ucPoints: 'UC Points',
+      ucPoints: 'Alya Points',
       settings: 'Settings',
       signOut: 'Sign Out',
       welcomeBack: 'Welcome back',
@@ -190,7 +190,7 @@ export const translations = {
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
       createAccount: 'Create Account',
-      joinUC: 'Join UC and get 100 welcome points!',
+      joinUC: 'Join AlyaNoor and get 100 welcome points!',
       orRegisterWith: 'Or register with email',
       password: 'Password',
       confirmPassword: 'Confirm Password',
@@ -231,7 +231,7 @@ export const translations = {
 
     // Footer
     footer: {
-      joinClub: 'Join the UC Club',
+      joinClub: 'Join the Alya Club',
       clubDesc: 'Subscribe for exclusive offers, new arrivals, and 10% off your first order.',
       shop: 'Shop',
       newArrivals: 'New Arrivals',
@@ -278,7 +278,7 @@ export const translations = {
     // Navigation
     nav: {
       newIn: 'Baru',
-      originals: 'UC Originals',
+      originals: 'Alya Originals',
       style: 'Gaya',
       women: 'Wanita',
       men: 'Pria',
@@ -432,7 +432,7 @@ export const translations = {
       myOrders: 'Pesanan Saya',
       wishlist: 'Favorit',
       addresses: 'Alamat',
-      ucPoints: 'UC Points',
+      ucPoints: 'Alya Points',
       settings: 'Pengaturan',
       signOut: 'Keluar',
       welcomeBack: 'Selamat datang kembali',
@@ -506,7 +506,7 @@ export const translations = {
 
     // Footer
     footer: {
-      joinClub: 'Gabung UC Club',
+      joinClub: 'Gabung Alya Club',
       clubDesc: 'Berlangganan untuk penawaran eksklusif, koleksi baru, dan diskon 10% untuk pesanan pertama.',
       shop: 'Belanja',
       newArrivals: 'Koleksi Baru',

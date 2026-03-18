@@ -198,7 +198,7 @@ export const useNotificationsStore = create<NotificationsState>()(
       },
     }),
     {
-      name: 'uc-notifications',
+      name: 'alyanoor-notifications',
       partialize: (state) => ({ notifications: state.notifications }),
     }
   )

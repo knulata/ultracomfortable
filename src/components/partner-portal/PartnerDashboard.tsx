@@ -103,7 +103,7 @@ export function PartnerDashboard({ partner }: PartnerDashboardProps) {
       <div className="bg-muted/50 rounded-xl p-4 flex items-center justify-between">
         <div>
           <p className="text-sm text-muted-foreground">
-            {language === 'id' ? 'Komisi UC Anda' : 'Your UC Commission'}
+            {language === 'id' ? 'Komisi UC Anda' : 'Your AlyaNoor Commission'}
           </p>
           <p className="text-2xl font-bold text-primary">{partner.commissionRate}%</p>
         </div>

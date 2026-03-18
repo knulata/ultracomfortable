@@ -637,7 +637,7 @@ export const useFulfillmentStore = create<FulfillmentState>()(
       },
     }),
     {
-      name: 'uc-fulfillment',
+      name: 'alyanoor-fulfillment',
     }
   )
 )

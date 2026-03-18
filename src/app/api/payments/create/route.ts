@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
         name: item.name.slice(0, 50), // Midtrans limit
         price: item.price,
         quantity: item.quantity,
-        brand: 'UC',
+        brand: 'AlyaNoor',
         category: item.category || 'Fashion',
       })) || [{
         id: orderId,

@@ -464,7 +464,7 @@ export const useIntakeStore = create<IntakeState>()(
       },
     }),
     {
-      name: 'uc-intake',
+      name: 'alyanoor-intake',
     }
   )
 )

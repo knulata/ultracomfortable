@@ -391,7 +391,7 @@ export const usePayoutStore = create<PayoutState>()(
       },
     }),
     {
-      name: 'uc-payouts',
+      name: 'alyanoor-payouts',
     }
   )
 )

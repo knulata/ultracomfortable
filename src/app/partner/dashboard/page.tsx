@@ -55,7 +55,7 @@ export default function PartnerDashboardPage() {
           <p className="text-muted-foreground mb-4">
             {language === 'id'
               ? 'Anda belum terdaftar sebagai partner UC.'
-              : "You're not registered as a UC partner yet."
+              : "You're not registered as a AlyaNoor partner yet."
             }
           </p>
           <Button asChild>
@@ -115,7 +115,7 @@ export default function PartnerDashboardPage() {
             </button>
             <div>
               <p className="font-bold text-lg leading-tight">{partner.shopName}</p>
-              <p className="text-xs text-muted-foreground">{language === 'id' ? 'Partner UC' : 'UC Partner'}</p>
+              <p className="text-xs text-muted-foreground">{language === 'id' ? 'Partner UC' : 'AlyaNoor Partner'}</p>
             </div>
           </div>
 

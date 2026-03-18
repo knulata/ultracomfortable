@@ -278,7 +278,7 @@ export default function TrialRegisterPage() {
               <p className="text-sm">
                 {language === 'id'
                   ? 'Bawa 10 potong barang Anda ke gudang UC di Tanah Abang pada jadwal yang Anda pilih.'
-                  : 'Bring your 10 pieces to the UC warehouse in Tanah Abang at your selected schedule.'}
+                  : 'Bring your 10 pieces to the AlyaNoor warehouse in Tanah Abang at your selected schedule.'}
               </p>
             </div>
 

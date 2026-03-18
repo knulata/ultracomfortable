@@ -406,7 +406,7 @@ export const useReviewsStore = create<ReviewsState>()(
       },
     }),
     {
-      name: 'uc-reviews',
+      name: 'alyanoor-reviews',
       partialize: (state) => ({ userVotes: state.userVotes }),
     }
   )

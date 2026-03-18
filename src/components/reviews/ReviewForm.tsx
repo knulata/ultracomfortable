@@ -94,7 +94,7 @@ export function ReviewForm({ productId, productName, onClose, onSuccess }: Revie
     })
 
     setIsSubmitting(false)
-    toast.success(language === 'id' ? 'Ulasan berhasil dikirim! +50 UC Points' : 'Review submitted successfully! +50 UC Points')
+    toast.success(language === 'id' ? 'Ulasan berhasil dikirim! +50 Alya Points' : 'Review submitted successfully! +50 Alya Points')
     onSuccess?.()
     onClose()
   }
@@ -206,7 +206,7 @@ export function ReviewForm({ productId, productName, onClose, onSuccess }: Revie
               {language === 'id' ? 'Tambah Foto (opsional)' : 'Add Photos (optional)'}
             </label>
             <p className="text-xs text-muted-foreground mb-3">
-              {language === 'id' ? 'Foto dengan produk akan mendapat +50 UC Points!' : 'Photos with the product earn +50 UC Points!'}
+              {language === 'id' ? 'Foto dengan produk akan mendapat +50 Alya Points!' : 'Photos with the product earn +50 Alya Points!'}
             </p>
 
             <div className="flex flex-wrap gap-3">

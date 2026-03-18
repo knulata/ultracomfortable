@@ -98,7 +98,7 @@ export const useStockAlertsStore = create<StockAlertsState>()(
       },
     }),
     {
-      name: 'uc-stock-alerts',
+      name: 'alyanoor-stock-alerts',
     }
   )
 )

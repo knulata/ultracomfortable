@@ -291,7 +291,7 @@ export const usePartnerStore = create<PartnerState>()(
       },
     }),
     {
-      name: 'uc-partners',
+      name: 'alyanoor-partners',
     }
   )
 )

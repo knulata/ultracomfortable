@@ -100,7 +100,7 @@ function VerifyContent() {
 
         <div className="p-4 bg-primary/10 rounded-lg mb-6">
           <p className="text-sm font-medium">Welcome Bonus!</p>
-          <p className="text-2xl font-bold text-primary">+100 UC Points</p>
+          <p className="text-2xl font-bold text-primary">+100 Alya Points</p>
         </div>
 
         <Button asChild className="w-full" size="lg">

@@ -228,7 +228,7 @@ export const useCheckInStore = create<CheckInState>()(
       },
     }),
     {
-      name: 'uc-checkin-storage',
+      name: 'alyanoor-checkin-storage',
     }
   )
 )

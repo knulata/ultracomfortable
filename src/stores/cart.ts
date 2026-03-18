@@ -92,7 +92,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: 'uc-cart',
+      name: 'alyanoor-cart',
       partialize: (state) => ({ items: state.items }),
     }
   )

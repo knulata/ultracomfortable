@@ -142,7 +142,7 @@ export const useWishlistStore = create<WishlistState>()(
       },
     }),
     {
-      name: 'uc-wishlist',
+      name: 'alyanoor-wishlist',
     }
   )
 )
