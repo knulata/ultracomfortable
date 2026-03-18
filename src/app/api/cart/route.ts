@@ -16,6 +16,25 @@ interface CartItem {
 
 // Product catalog for validation
 const products = [
+  // HIJAB
+  { id: 'hijab-1', slug: 'premium-voal-square-hijab', name: 'Premium Voal Square Hijab', price: 89000, sizes: ['115x115cm'], colors: ['Black', 'Navy', 'Dusty Pink', 'Sage', 'Cream', 'Mocca'] },
+  { id: 'hijab-2', slug: 'jersey-instant-hijab', name: 'Jersey Instant Hijab', price: 75000, sizes: ['All Size'], colors: ['Black', 'Grey', 'Navy', 'Maroon', 'Army'] },
+  { id: 'hijab-3', slug: 'pashmina-diamond-italiano', name: 'Pashmina Diamond Italiano', price: 125000, sizes: ['175x75cm'], colors: ['Black', 'White', 'Dusty Purple', 'Burgundy', 'Emerald'] },
+  { id: 'hijab-4', slug: 'bergo-daily-sport', name: 'Bergo Daily Sport', price: 65000, sizes: ['S', 'M', 'L'], colors: ['Black', 'Navy', 'Grey', 'White'] },
+  // GAMIS
+  { id: 'gamis-1', slug: 'basic-daily-gamis', name: 'Basic Daily Gamis', price: 189000, sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Black', 'Navy', 'Grey', 'Cream', 'Dusty Pink'] },
+  { id: 'gamis-2', slug: 'abaya-arabian-premium', name: 'Abaya Arabian Premium', price: 450000, sizes: ['S', 'M', 'L', 'XL'], colors: ['Black', 'Navy', 'Emerald', 'Maroon'] },
+  { id: 'gamis-3', slug: 'gamis-set-khimar', name: 'Gamis Set Khimar', price: 350000, sizes: ['S', 'M', 'L', 'XL'], colors: ['Black', 'Dusty Pink', 'Sage', 'Mocca'] },
+  { id: 'gamis-4', slug: 'kaftan-mewah-brukat', name: 'Kaftan Mewah Brukat', price: 550000, sizes: ['All Size'], colors: ['Gold', 'Silver', 'Navy', 'Maroon'] },
+  // KHIMAR
+  { id: 'khimar-1', slug: 'khimar-pet-ceruti', name: 'Khimar Pet Ceruti', price: 145000, sizes: ['S', 'M', 'L'], colors: ['Black', 'Navy', 'Grey', 'Dusty Pink', 'Cream'] },
+  { id: 'khimar-2', slug: 'khimar-syari-jumbo', name: 'Khimar Syari Jumbo', price: 175000, sizes: ['L', 'XL', 'XXL'], colors: ['Black', 'Navy', 'Brown', 'Grey'] },
+  { id: 'khimar-3', slug: 'niqab-bandana-style', name: 'Niqab Bandana Style', price: 55000, sizes: ['All Size'], colors: ['Black', 'Navy', 'Brown'] },
+  // MUKENA
+  { id: 'mukena-1', slug: 'mukena-travel-parasut', name: 'Mukena Travel Parasut', price: 165000, sizes: ['All Size'], colors: ['White', 'Soft Pink', 'Mint', 'Lavender'] },
+  { id: 'mukena-2', slug: 'mukena-katun-jepang-premium', name: 'Mukena Katun Jepang Premium', price: 285000, sizes: ['All Size'], colors: ['White', 'Broken White', 'Soft Grey'] },
+  { id: 'mukena-3', slug: 'mukena-anak-karakter', name: 'Mukena Anak Karakter', price: 125000, sizes: ['3-5 Years', '6-8 Years', '9-12 Years'], colors: ['Pink', 'Purple', 'Blue', 'Green'] },
+  // GENERAL
   { id: 'prod-1', slug: 'relaxed-fit-cotton-tee', name: 'Relaxed Fit Cotton Tee', price: 179000, sizes: ['S', 'M', 'L', 'XL'], colors: ['White', 'Black', 'Navy', 'Grey'] },
   { id: 'prod-2', slug: 'vintage-wash-tshirt', name: 'Vintage Wash T-Shirt', price: 199000, sizes: ['S', 'M', 'L', 'XL'], colors: ['Dusty Blue', 'Sage', 'Cream'] },
   { id: 'prod-3', slug: 'high-waist-straight-jeans', name: 'High Waist Straight Jeans', price: 399000, sizes: ['26', '27', '28', '29', '30', '31', '32'], colors: ['Light Blue', 'Dark Blue', 'Black'] },

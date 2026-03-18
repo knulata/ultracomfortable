@@ -221,6 +221,10 @@ GET /api/orders?id=AN-ABC123
 
 | Category | Description |
 |----------|-------------|
+| `hijab` | Hijab, pashmina, instant hijab, bergo |
+| `gamis` | Gamis, abaya, kaftan |
+| `khimar` | Khimar, niqab |
+| `mukena` | Prayer wear, mukena |
 | `tops` | T-shirts, blouses, shirts |
 | `bottoms` | Jeans, pants, skirts |
 | `dresses` | Dresses of all styles |

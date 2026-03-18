@@ -13,6 +13,48 @@ import { Heart } from 'lucide-react'
 
 // Category configuration
 const categoryConfig: Record<string, { title: string, titleId: string, subcategories: { name: string, nameId: string, href: string }[] }> = {
+  hijab: {
+    title: 'Hijab',
+    titleId: 'Hijab',
+    subcategories: [
+      { name: 'Pashmina', nameId: 'Pashmina', href: '/hijab/pashmina' },
+      { name: 'Square Hijab', nameId: 'Hijab Segi Empat', href: '/hijab/square' },
+      { name: 'Instant Hijab', nameId: 'Hijab Instan', href: '/hijab/instant' },
+      { name: 'Bergo', nameId: 'Bergo', href: '/hijab/bergo' },
+      { name: 'Inner & Ciput', nameId: 'Inner & Ciput', href: '/hijab/inner' },
+    ],
+  },
+  gamis: {
+    title: 'Gamis & Abaya',
+    titleId: 'Gamis & Abaya',
+    subcategories: [
+      { name: 'Daily Gamis', nameId: 'Gamis Harian', href: '/gamis/daily' },
+      { name: 'Formal Gamis', nameId: 'Gamis Formal', href: '/gamis/formal' },
+      { name: 'Abaya', nameId: 'Abaya', href: '/gamis/abaya' },
+      { name: 'Gamis Set', nameId: 'Gamis Set', href: '/gamis/set' },
+      { name: 'Kaftan', nameId: 'Kaftan', href: '/gamis/kaftan' },
+    ],
+  },
+  khimar: {
+    title: 'Khimar',
+    titleId: 'Khimar',
+    subcategories: [
+      { name: 'Short Khimar', nameId: 'Khimar Pendek', href: '/khimar/short' },
+      { name: 'Medium Khimar', nameId: 'Khimar Sedang', href: '/khimar/medium' },
+      { name: 'Long Khimar', nameId: 'Khimar Panjang', href: '/khimar/long' },
+      { name: 'Niqab', nameId: 'Niqab', href: '/khimar/niqab' },
+    ],
+  },
+  mukena: {
+    title: 'Mukena',
+    titleId: 'Mukena',
+    subcategories: [
+      { name: 'Travel Mukena', nameId: 'Mukena Travel', href: '/mukena/travel' },
+      { name: 'Cotton Mukena', nameId: 'Mukena Katun', href: '/mukena/cotton' },
+      { name: 'Silk Mukena', nameId: 'Mukena Sutra', href: '/mukena/silk' },
+      { name: 'Kids Mukena', nameId: 'Mukena Anak', href: '/mukena/kids' },
+    ],
+  },
   women: {
     title: 'Women',
     titleId: 'Wanita',

@@ -23,11 +23,11 @@ export function Header() {
   const categories = [
     { name: t.nav.newIn, href: '/new' },
     { name: t.nav.originals, href: '/originals', isOriginals: true },
-    { name: t.nav.style, href: '/style' },
+    { name: t.nav.hijab, href: '/hijab' },
+    { name: t.nav.gamis, href: '/gamis' },
+    { name: t.nav.khimar, href: '/khimar' },
+    { name: t.nav.mukena, href: '/mukena' },
     { name: t.nav.women, href: '/women' },
-    { name: t.nav.men, href: '/men' },
-    { name: t.nav.kids, href: '/kids' },
-    { name: t.nav.beauty, href: '/beauty' },
     { name: t.nav.sale, href: '/sale', highlight: true },
   ]
 
@@ -57,7 +57,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold tracking-tight">
-              <span className="text-primary">UC</span>
+              <span className="text-primary">AlyaNoor</span>
             </span>
           </Link>
 
@@ -142,7 +142,7 @@ export function Header() {
           <div className="fixed inset-y-0 left-0 w-full max-w-xs bg-background shadow-xl">
             <div className="flex items-center justify-between p-4 border-b">
               <span className="text-xl font-bold">
-                <span className="text-primary">UC</span>
+                <span className="text-primary">AlyaNoor</span>
               </span>
               <button
                 onClick={() => setMobileMenuOpen(false)}

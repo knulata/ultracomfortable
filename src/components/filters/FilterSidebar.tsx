@@ -15,11 +15,14 @@ const filterSections: FilterSection[] = [
     id: 'category',
     name: 'Category',
     options: [
+      { value: 'hijab', label: 'Hijab', count: 245 },
+      { value: 'gamis', label: 'Gamis & Abaya', count: 189 },
+      { value: 'khimar', label: 'Khimar', count: 134 },
+      { value: 'mukena', label: 'Mukena', count: 87 },
       { value: 'tops', label: 'Tops', count: 124 },
       { value: 'dresses', label: 'Dresses', count: 89 },
       { value: 'bottoms', label: 'Bottoms', count: 156 },
       { value: 'outerwear', label: 'Outerwear', count: 67 },
-      { value: 'activewear', label: 'Activewear', count: 45 },
     ],
   },
   {
