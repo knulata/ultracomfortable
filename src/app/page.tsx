@@ -29,13 +29,13 @@ import { DailyDealsSection } from '@/components/daily-deals'
 import { RecentlyViewedSection } from '@/components/recently-viewed'
 import { toast } from 'sonner'
 
-// Mock trending products
+// Mock trending products - modest fashion focus
 const trendingProducts = [
-  { id: 't1', name: 'Oversized Cotton Tee', nameId: 'Kaos Oversized Katun', price: 199000, originalPrice: 249000, rating: 4.8, reviews: 234, sold: 1250 },
-  { id: 't2', name: 'Slim Fit Jeans', nameId: 'Jeans Slim Fit', price: 449000, originalPrice: null, rating: 4.6, reviews: 189, sold: 890 },
-  { id: 't3', name: 'Casual Blazer', nameId: 'Blazer Kasual', price: 699000, originalPrice: 899000, rating: 4.9, reviews: 156, sold: 567 },
-  { id: 't4', name: 'Printed Midi Dress', nameId: 'Gaun Midi Bermotif', price: 399000, originalPrice: null, rating: 4.7, reviews: 312, sold: 2100 },
-  { id: 't5', name: 'Cropped Cardigan', nameId: 'Kardigan Crop', price: 349000, originalPrice: 449000, rating: 4.5, reviews: 98, sold: 430 },
+  { id: 't1', name: 'Premium Voal Square Hijab', nameId: 'Hijab Segi Empat Voal Premium', price: 89000, originalPrice: 129000, rating: 4.9, reviews: 1245, sold: 8920 },
+  { id: 't2', name: 'Basic Daily Gamis', nameId: 'Gamis Harian Basic', price: 189000, originalPrice: 249000, rating: 4.8, reviews: 2156, sold: 12500 },
+  { id: 't3', name: 'Khimar Pet Ceruti', nameId: 'Khimar Pet Ceruti', price: 145000, originalPrice: 189000, rating: 4.8, reviews: 678, sold: 4560 },
+  { id: 't4', name: 'Mukena Travel Parasut', nameId: 'Mukena Travel Parasut', price: 165000, originalPrice: 215000, rating: 4.8, reviews: 1567, sold: 8920 },
+  { id: 't5', name: 'Abaya Arabian Premium', nameId: 'Abaya Arabian Premium', price: 450000, originalPrice: 599000, rating: 4.9, reviews: 789, sold: 4560 },
 ].map(p => ({ ...p, slug: p.name.toLowerCase().replace(/\s+/g, '-') }))
 
 export default function HomePage() {
@@ -65,10 +65,10 @@ export default function HomePage() {
   }
 
   const categories = [
-    { name: t.nav.women, nameId: 'Wanita', href: '/women' },
-    { name: t.nav.men, nameId: 'Pria', href: '/men' },
-    { name: t.nav.kids, nameId: 'Anak', href: '/kids' },
-    { name: t.nav.beauty, nameId: 'Kecantikan', href: '/beauty' },
+    { name: t.nav.hijab, nameId: 'Hijab', href: '/hijab', icon: '🧕' },
+    { name: t.nav.gamis, nameId: 'Gamis & Abaya', href: '/gamis', icon: '👗' },
+    { name: t.nav.khimar, nameId: 'Khimar', href: '/khimar', icon: '✨' },
+    { name: t.nav.mukena, nameId: 'Mukena', href: '/mukena', icon: '🤲' },
   ]
 
   const features = [
@@ -80,32 +80,35 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Banner */}
-      <section className="relative h-[70vh] min-h-[500px] bg-secondary">
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary to-primary/10" />
+      {/* Hero Banner - Modest Fashion Focus */}
+      <section className="relative h-[70vh] min-h-[500px] bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
+        <div className="absolute inset-0 bg-[url('/pattern-islamic.svg')] opacity-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent z-10" />
 
         <div className="relative z-20 container mx-auto px-4 h-full flex items-center">
           <div className="max-w-xl">
             <span className="inline-block px-4 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full mb-4">
-              {t.home.heroTag}
+              {language === 'id' ? '✨ Koleksi Modest Fashion' : '✨ Modest Fashion Collection'}
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-              {t.home.heroTitle} <span className="text-primary">{t.home.heroTitleHighlight}</span>
+              {language === 'id' ? 'Cantik dalam ' : 'Beautiful in '}
+              <span className="text-primary">{language === 'id' ? 'Kesederhanaan' : 'Modesty'}</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              {t.home.heroDescription}
+              {language === 'id'
+                ? 'Temukan koleksi hijab, gamis, khimar & mukena berkualitas dari Tanah Abang. Tampil syari, tetap stylish.'
+                : 'Discover quality hijab, gamis, khimar & mukena from Tanah Abang. Stay modest, stay stylish.'}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" asChild>
-                <Link href="/new">
-                  {t.home.shopNewArrivals}
+                <Link href="/hijab">
+                  {language === 'id' ? 'Belanja Hijab' : 'Shop Hijab'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/sale">
-                  {t.home.viewSale}
+                <Link href="/gamis">
+                  {language === 'id' ? 'Koleksi Gamis' : 'Gamis Collection'}
                 </Link>
               </Button>
             </div>
@@ -427,8 +430,8 @@ export default function HomePage() {
               </div>
               <p className="text-muted-foreground mb-4">
                 "{language === 'id'
-                  ? 'Omset online saya naik 3x lipat sejak gabung AlyaNoor. Sekarang fokus produksi, UC yang jual.'
-                  : 'My online revenue tripled since joining UC. Now I focus on production, UC handles sales.'}"
+                  ? 'Omset online saya naik 3x lipat sejak gabung AlyaNoor. Sekarang fokus produksi, AlyaNoor yang jual.'
+                  : 'My online revenue tripled since joining AlyaNoor. Now I focus on production, AlyaNoor handles sales.'}"
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
