@@ -21,9 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AlyaNoor - Modest Fashion Indonesia",
-  description: "Discover elegant modest fashion at AlyaNoor. Premium quality hijab, abaya, and Muslim fashion from Tanah Abang. Free shipping on orders over Rp 500.000.",
-  keywords: ["modest fashion", "hijab", "Muslim fashion", "AlyaNoor", "Indonesia", "Tanah Abang", "abaya"],
+  title: "Alyanoor - Modest Fashion Indonesia",
+  description: "Discover elegant modest fashion at Alyanoor. Premium quality hijab, abaya, and Muslim fashion from Tanah Abang. Free shipping on orders over Rp 500.000.",
+  keywords: ["modest fashion", "hijab", "Muslim fashion", "Alyanoor", "Indonesia", "Tanah Abang", "abaya"],
 };
 
 export default function RootLayout({

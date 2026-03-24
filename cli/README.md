@@ -1,6 +1,6 @@
-# AlyaNoor Shop CLI & API
+# Alyanoor Shop CLI & API
 
-A command-line interface and REST API for AI agents to browse and purchase clothing from AlyaNoor.
+A command-line interface and REST API for AI agents to browse and purchase clothing from Alyanoor.
 
 ## Quick Start
 

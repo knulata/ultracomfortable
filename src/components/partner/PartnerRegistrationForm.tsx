@@ -129,7 +129,7 @@ export function PartnerRegistrationForm() {
         <p className="text-muted-foreground mb-6 max-w-md mx-auto">
           {language === 'id'
             ? 'Terima kasih telah mendaftar sebagai partner UC. Tim kami akan menghubungi Anda dalam 1-2 hari kerja untuk verifikasi.'
-            : 'Thank you for registering as a AlyaNoor partner. Our team will contact you within 1-2 business days for verification.'
+            : 'Thank you for registering as a Alyanoor partner. Our team will contact you within 1-2 business days for verification.'
           }
         </p>
         <div className="bg-muted/50 rounded-lg p-4 max-w-sm mx-auto">
@@ -139,7 +139,7 @@ export function PartnerRegistrationForm() {
           <ol className="text-sm text-left space-y-2">
             <li className="flex items-start gap-2">
               <span className="bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0">1</span>
-              <span>{language === 'id' ? 'Verifikasi WhatsApp dari tim UC' : 'WhatsApp verification from AlyaNoor team'}</span>
+              <span>{language === 'id' ? 'Verifikasi WhatsApp dari tim UC' : 'WhatsApp verification from Alyanoor team'}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0">2</span>
@@ -147,7 +147,7 @@ export function PartnerRegistrationForm() {
             </li>
             <li className="flex items-start gap-2">
               <span className="bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0">3</span>
-              <span>{language === 'id' ? 'Mulai drop barang ke gudang UC' : 'Start dropping items at AlyaNoor warehouse'}</span>
+              <span>{language === 'id' ? 'Mulai drop barang ke gudang UC' : 'Start dropping items at Alyanoor warehouse'}</span>
             </li>
           </ol>
         </div>
@@ -409,7 +409,7 @@ export function PartnerRegistrationForm() {
             <div className="flex items-center gap-2 mb-2">
               <Percent className="h-5 w-5 text-primary" />
               <span className="font-semibold">
-                {language === 'id' ? 'Komisi UC' : 'AlyaNoor Commission'}
+                {language === 'id' ? 'Komisi UC' : 'Alyanoor Commission'}
               </span>
             </div>
             <p className="text-sm text-muted-foreground mb-2">

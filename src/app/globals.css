@@ -49,7 +49,7 @@
 
 :root {
   --radius: 0.5rem;
-  /* AlyaNoor Theme - Light Mode */
+  /* Alyanoor Theme - Light Mode */
   --background: oklch(1 0 0);
   --foreground: oklch(0.13 0 0);
   --card: oklch(1 0 0);
@@ -86,7 +86,7 @@
 }
 
 .dark {
-  /* AlyaNoor Theme - Dark Mode (default for UC brand) */
+  /* Alyanoor Theme - Dark Mode (default for UC brand) */
   /* Alya Black: #0a0a0a */
   --background: oklch(0.13 0 0);
   --foreground: oklch(0.98 0 0);

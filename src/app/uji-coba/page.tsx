@@ -80,14 +80,14 @@ export default function UjiCobaPage() {
       title: language === 'id' ? 'Antar 10 Potong' : 'Drop Off 10 Pieces',
       description: language === 'id'
         ? 'Bawa ke gudang UC, kami terima & foto'
-        : 'Bring to AlyaNoor warehouse, we receive & photograph',
+        : 'Bring to Alyanoor warehouse, we receive & photograph',
     },
     {
       number: '3',
       title: language === 'id' ? 'Kami Jualkan' : 'We Sell',
       description: language === 'id'
         ? 'Produk live di toko online UC'
-        : 'Products go live on AlyaNoor online store',
+        : 'Products go live on Alyanoor online store',
     },
     {
       number: '4',

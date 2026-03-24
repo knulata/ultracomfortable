@@ -137,7 +137,7 @@ export default function ResellerPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-6">
             <Users className="h-4 w-4" />
-            {language === 'id' ? 'Program Reseller UC' : 'AlyaNoor Reseller Program'}
+            {language === 'id' ? 'Program Reseller UC' : 'Alyanoor Reseller Program'}
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold mb-4">

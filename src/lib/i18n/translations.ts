@@ -194,7 +194,7 @@ export const translations = {
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
       createAccount: 'Create Account',
-      joinUC: 'Join AlyaNoor and get 100 welcome points!',
+      joinUC: 'Join Alyanoor and get 100 welcome points!',
       orRegisterWith: 'Or register with email',
       password: 'Password',
       confirmPassword: 'Confirm Password',

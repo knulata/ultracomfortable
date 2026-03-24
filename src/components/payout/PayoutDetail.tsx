@@ -288,7 +288,7 @@ export function PayoutDetail({ payout, onBack }: PayoutDetailProps) {
         <div className="flex justify-between text-sm text-amber-600">
           <span className="flex items-center gap-1">
             <Percent className="h-3 w-3" />
-            {language === 'id' ? 'Komisi UC' : 'AlyaNoor Commission'} ({payout.commissionRate}%)
+            {language === 'id' ? 'Komisi UC' : 'Alyanoor Commission'} ({payout.commissionRate}%)
           </span>
           <span>-{formatPrice(payout.commissionAmount)}</span>
         </div>

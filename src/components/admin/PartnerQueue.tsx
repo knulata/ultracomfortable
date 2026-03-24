@@ -117,7 +117,7 @@ function PartnerDetailModal({ partner, onClose, onApprove, onReject }: PartnerDe
 
           {/* Commission Rate */}
           <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg mb-6">
-            <span className="text-sm">{language === 'id' ? 'Komisi UC' : 'AlyaNoor Commission'}</span>
+            <span className="text-sm">{language === 'id' ? 'Komisi UC' : 'Alyanoor Commission'}</span>
             <span className="font-bold text-primary">{partner.commissionRate}%</span>
           </div>
 

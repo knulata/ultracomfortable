@@ -66,7 +66,7 @@ export default function ReferralsPage() {
 
     const urls = {
       whatsapp: `https://wa.me/?text=${encodeURIComponent(message)}`,
-      email: `mailto:?subject=${encodeURIComponent('Join AlyaNoor!')}&body=${encodeURIComponent(message)}`,
+      email: `mailto:?subject=${encodeURIComponent('Join Alyanoor!')}&body=${encodeURIComponent(message)}`,
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`,
     }
 

@@ -45,7 +45,7 @@ export default function PartnerRegisterPage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold">
-                {language === 'id' ? 'Daftar Jadi Partner UC' : 'Become a AlyaNoor Partner'}
+                {language === 'id' ? 'Daftar Jadi Partner UC' : 'Become a Alyanoor Partner'}
               </h1>
               <p className="text-muted-foreground">
                 {language === 'id' ? 'Tanah Abang Fulfillment Center' : 'Tanah Abang Fulfillment Center'}
@@ -71,7 +71,7 @@ export default function PartnerRegisterPage() {
               {
                 icon: Package,
                 title: language === 'id' ? 'Upload & Kelola' : 'Upload & Manage',
-                desc: language === 'id' ? 'Listing produk dikelola tim UC' : 'Product listings managed by AlyaNoor team',
+                desc: language === 'id' ? 'Listing produk dikelola tim UC' : 'Product listings managed by Alyanoor team',
               },
               {
                 icon: Truck,

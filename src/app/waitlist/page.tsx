@@ -125,7 +125,7 @@ function WaitlistContent() {
   }
 
   const shareToWhatsApp = () => {
-    const text = `Join AlyaNoor waitlist and get Rp50K off! Use my code: ${referralCode}\nhttps://alyanoor.com/waitlist?ref=${referralCode}`
+    const text = `Join Alyanoor waitlist and get Rp50K off! Use my code: ${referralCode}\nhttps://alyanoor.com/waitlist?ref=${referralCode}`
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
@@ -173,7 +173,7 @@ function WaitlistContent() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
             Fashion yang
             <br />
-            <span className="text-primary">AlyaNoor</span>
+            <span className="text-primary">Alyanoor</span>
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
@@ -275,7 +275,7 @@ function WaitlistContent() {
 
               <h2 className="text-2xl font-bold mb-2">Kamu sudah terdaftar!</h2>
               <p className="text-muted-foreground mb-6">
-                Kami akan kirim email saat AlyaNoor launching
+                Kami akan kirim email saat Alyanoor launching
               </p>
 
               {/* Referral Section */}
@@ -426,7 +426,7 @@ function WaitlistContent() {
             <a href="#" className="hover:text-primary transition-colors">Twitter</a>
           </div>
           <p className="mt-6">
-            © 2026 AlyaNoor. All rights reserved.
+            © 2026 Alyanoor. All rights reserved.
           </p>
         </div>
       </div>

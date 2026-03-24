@@ -57,7 +57,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold tracking-tight">
-              <span className="text-primary">AlyaNoor</span>
+              <span className="text-primary">Alyanoor</span>
             </span>
           </Link>
 
@@ -142,7 +142,7 @@ export function Header() {
           <div className="fixed inset-y-0 left-0 w-full max-w-xs bg-background shadow-xl">
             <div className="flex items-center justify-between p-4 border-b">
               <span className="text-xl font-bold">
-                <span className="text-primary">AlyaNoor</span>
+                <span className="text-primary">Alyanoor</span>
               </span>
               <button
                 onClick={() => setMobileMenuOpen(false)}

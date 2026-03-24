@@ -430,8 +430,8 @@ export default function HomePage() {
               </div>
               <p className="text-muted-foreground mb-4">
                 "{language === 'id'
-                  ? 'Omset online saya naik 3x lipat sejak gabung AlyaNoor. Sekarang fokus produksi, AlyaNoor yang jual.'
-                  : 'My online revenue tripled since joining AlyaNoor. Now I focus on production, AlyaNoor handles sales.'}"
+                  ? 'Omset online saya naik 3x lipat sejak gabung Alyanoor. Sekarang fokus produksi, Alyanoor yang jual.'
+                  : 'My online revenue tripled since joining Alyanoor. Now I focus on production, Alyanoor handles sales.'}"
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">

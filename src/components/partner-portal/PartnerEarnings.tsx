@@ -122,7 +122,7 @@ export function PartnerEarnings({ partner, payouts: initialPayouts }: PartnerEar
           </div>
           <div className="flex justify-between text-red-600">
             <span>
-              {language === 'id' ? 'Komisi UC' : 'AlyaNoor Commission'} ({partner.commissionRate}%)
+              {language === 'id' ? 'Komisi UC' : 'Alyanoor Commission'} ({partner.commissionRate}%)
             </span>
             <span>-{formatPrice(partner.totalSales * (partner.commissionRate / 100))}</span>
           </div>
@@ -192,7 +192,7 @@ export function PartnerEarnings({ partner, payouts: initialPayouts }: PartnerEar
                       <span>{formatPrice(payout.totalSales)}</span>
                     </div>
                     <div className="flex justify-between text-red-600">
-                      <span>{language === 'id' ? 'Komisi UC' : 'AlyaNoor Commission'}</span>
+                      <span>{language === 'id' ? 'Komisi UC' : 'Alyanoor Commission'}</span>
                       <span>-{formatPrice(payout.commission)}</span>
                     </div>
                     {payout.deductions > 0 && (
